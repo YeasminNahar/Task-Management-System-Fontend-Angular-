@@ -1,0 +1,104 @@
+<a href="javascript:void(0)" *ngIf="!isList;" (click)="isList=true;reset()" class="btn-list1">List Tasks</a>
+<a href="javascript:void(0)" *ngIf="isList" (click)="isList=false;reset();getTaskCategories()" class="btn-new1">Add New Task</a>
+
+<div *ngIf="isList">
+    <div class="row">
+        <div class="col-lg-4">
+            Show
+            <select style="width: 50px;height: 32px;" [(ngModel)]="pageSize" (change)="search()">
+                <option *ngFor="let item of listPageSize" [value]="item">
+                    {{item}}
+                </option>
+            </select>
+            records
+        </div>
+        <div class="col-lg-4">
+            <h4 class="text-center">Task Information</h4>
+        </div>
+    </div>
+    
+    <!-- Table for displaying tasks -->
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-secondary">
+                <th>Task Description</th>
+                <th>Deadline</th>
+                <th>Task Category</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of listTasks">
+                <td>{{item.description}}</td>
+                <td>{{item.deadLine | date:'shortDate'}}</td>
+                <td>{{item.taskCategory?.name}}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" (click)="edit(item)">Edit</button>
+                    <button class="btn btn-sm btn-outline-primary" (click)="removeConfirm(item)" data-bs-toggle="modal" data-bs-target="#confirmModal">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div *ngIf="pager.totalPages > 1">
+        <ul class="pagination">
+            <li class="page-item" [class.disabled]="pageIndex === 0">
+                <a class="page-link" (click)="changePageNumber(pageIndex - 1)" href="javascript:void(0)">Previous</a>
+            </li>
+            <li *ngFor="let page of pager.pages" class="page-item" [class.active]="pageIndex === page - 1">
+                <a class="page-link" (click)="changePageNumber(page - 1)" href="javascript:void(0)">{{page}}</a>
+            </li>
+            <li class="page-item" [class.disabled]="pageIndex === pager.totalPages - 1">
+                <a class="page-link" (click)="changePageNumber(pageIndex + 1)" href="javascript:void(0)">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div *ngIf="!isList">
+    <h4 class="text-center">Task Entry Form</h4>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label" for="TaskDescription">Task Description:</label>
+            <input type="text" id="TaskDescription" [(ngModel)]="Task.description" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label" for="TaskDeadline">Deadline:</label>
+            <input type="date" id="TaskDeadline" [(ngModel)]="Task.deadLine" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label" for="TaskCategoryID">Task Category:</label>
+            <select id="TaskCategoryID" [(ngModel)]="Task.taskCategoryID" class="form-control">
+                <option *ngFor="let category of listTaskCategories" [value]="category.taskCategoryId">
+                    {{category.name}}
+                </option>
+            </select>
+        </div>
+
+        <div class="col-md-12 mt-5">
+            <button type="button" class="btn btn-secondary" *ngIf="Task.taskID > 0" (click)="update()">Update</button>
+            <button type="button" class="btn btn-primary" *ngIf="Task.taskID == 0" (click)="add()">Add</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary">Are you sure to remove?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-danger">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" (click)="reset()">No</button> /
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" (click)="remove(Task)">Yes</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

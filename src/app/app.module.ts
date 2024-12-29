@@ -12,7 +12,7 @@ import { TaskComponent } from './security/tasks/task.component';
 
 import { TaskCategoryComponent } from './security/category/taskcategory.component';
 import { CompanyComponent } from './security/company/company.component';
-
+import { MemberComponent } from './security/member-registration/member-registration.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DatePipe } from '@angular/common';
@@ -23,6 +23,7 @@ import { DatePipe } from '@angular/common';
     CompanyComponent,
     TaskCategoryComponent,
     TaskComponent,
+    MemberComponent,
     LoginComponent,
     DashboardComponent
   ],

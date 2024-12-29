@@ -11,6 +11,24 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent {
   title = '';
+  notificationsCount = 5; // Example: Replace with dynamic count
+  showNotificationList = false; // To toggle notification visibility
+  notifications = [
+    "You have a new message.",
+    "Your task has been updated.",
+    "Check your task deadline."
+  ]; // Example notifications
+
+  showNotifications() {
+    this.showNotificationList = !this.showNotificationList; // Toggle visibility
+  }
+  // notificationsCount = 5; // Example: Replace with dynamic count
+
+  // showNotifications() {
+  //   console.log("Display notifications dropdown or modal");
+  //   // Add logic to handle notification click
+  //   alert('Notifications clicked!');
+  // }
   //toast!: toastPayload;
   //isLogIn:boolean = false;
   //userName:string = '';

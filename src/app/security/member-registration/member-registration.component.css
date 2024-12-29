@@ -1,0 +1,60 @@
+/* Full page background */
+body {
+  background-color: #f4f6f9;
+}
+
+/* Center the card on the page */
+.container {
+  padding-top: 50px;
+}
+
+/* Card styling */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Card header styling */
+.card-header {
+  background-color: #007bff;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 15px;
+}
+
+.card-header h4 {
+  margin: 0;
+}
+
+/* Form styling */
+.form-label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  border-radius: 5px;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+}
+
+.btn {
+  width: 100%;
+  border-radius: 5px;
+}
+
+/* Button hover effect */
+.btn:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.text-center {
+  margin-top: 20px;
+}

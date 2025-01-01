@@ -1,3 +1,29 @@
-
+<div>
+    <h2>Task List</h2>
+    <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; text-align: left;">
+      <thead>
+        <tr style="background-color: #e6e6fa; color: #000;">
+          <th>Task ID</th>
+          <th>Task Name</th>
+          <th>Assigned To</th>
+          <th>Status</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.id }}</td>
+          <td>{{ task.name }}</td>
+          <td>{{ task.assignedTo }}</td>
+          <td>{{ task.status }}</td>
+          <td>{{ task.startDate }}</td>
+          <td>{{ task.endDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   
- <button (click)="generatePDF()"> PDF Generate</button>
+  <!-- Button to download the PDF -->
+  <button (click)="generatePDF()" style="margin-top: 20px;">Download Taskdetail</button>
+  

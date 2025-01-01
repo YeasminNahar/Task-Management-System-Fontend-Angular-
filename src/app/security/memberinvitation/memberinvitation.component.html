@@ -1,0 +1,41 @@
+<div *ngIf="isList">
+  <h1>Member Invitations</h1>
+  <button (click)="isList = false">Add New Invitation</button>
+  <ul>
+    <li *ngFor="let invitation of listInvitations">
+      {{ invitation.email }} 
+      <button (click)="remove(invitation)">Remove</button>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="!isList">
+  <h2>Add New Invitation</h2>
+  <form [formGroup]="invitationForm" (ngSubmit)="onSubmit()">
+    <label for="taskId">Task ID</label>
+    <input
+      id="taskId"
+      formControlName="taskId"
+      type="number"
+      placeholder="Enter Task ID"
+    />
+    <div *ngIf="invitationForm.get('taskId')?.invalid && invitationForm.get('taskId')?.touched">
+      Task ID is required and must be greater than 0.
+    </div>
+
+    <label for="email">Email</label>
+    <input
+      id="email"
+      formControlName="email"
+      type="email"
+      placeholder="Enter Email"
+    />
+    <div *ngIf="invitationForm.get('email')?.invalid && invitationForm.get('email')?.touched">
+      A valid email is required.
+    </div>
+
+    <button type="submit" [disabled]="invitationForm.invalid">Add</button>
+    <button type="button" (click)="resetForm()">Reset</button>
+    <button type="button" (click)="isList = true">Cancel</button>
+  </form>
+</div>

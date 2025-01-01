@@ -1,0 +1,31 @@
+<div class="month-calendar">
+    <div class="header">
+      <button (click)="changeMonth(-1)">&#9664; Prev</button>
+      <h2>{{ months[currentMonthIndex].name }} {{ currentYear }}</h2>
+      <button (click)="changeMonth(1)">Next &#9654;</button>
+    </div>
+  
+    <!-- Calendar Table -->
+    <table class="calendar">
+      <thead>
+        <tr>
+          <th *ngFor="let day of daysOfWeek">{{ day }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let week of generateCalendar()">
+          <td *ngFor="let day of week" (click)="day && isTaskAssigned(day) ? showTaskDetails(day) : null" [class.task-date]="day && isTaskAssigned(day)">
+            {{ day || '' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Task Details -->
+    <div class="task-details" *ngIf="selectedTask">
+      <h3>Task Details</h3>
+      <p>{{ selectedTask }}</p>
+      <button (click)="selectedTask = null">Close</button>
+    </div>
+  </div>
+  

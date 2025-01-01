@@ -7,8 +7,8 @@
                 <div class="mb-3">
                     <label for="task" class="form-label">Task</label>
                     <select class="form-select" id="task" name="task" required>
-                        <option value="" disabled selected>Select Task</option>
-                        <option value="1">Task 1</option>
+                        <option value="" disabled>Select Task</option>
+                        <option value="1" selected>Task 1</option> <!-- Default task -->
                         <option value="2">Task 2</option>
                         <option value="3">Task 3</option>
                     </select>
@@ -19,9 +19,10 @@
                     <label for="member" class="form-label">Assign To</label>
                     <select class="form-select" id="member" name="member" required>
                         <option value="" disabled selected>Select Member</option>
-                        <option value="1">John Doe</option>
-                        <option value="2">Jane Smith</option>
-                        <option value="3">Mark Taylor</option>
+                        <option value="1">Yeasmin</option>
+                        <option value="2">Jaber</option>
+                        <option value="3">Asif</option>
+                        <option value="4">Tusar</option>
                     </select>
                 </div>
 
@@ -35,7 +36,7 @@
                         rows="3" 
                         placeholder="Enter Description" 
                         readonly
-                    ></textarea>
+                    > Description for the  task and Complete development part</textarea>
                 </div>
 
                 <!-- Deadline (Readonly) -->
@@ -46,6 +47,7 @@
                         class="form-control" 
                         id="deadline" 
                         name="deadline" 
+                        value="2025-01-15T10:00" 
                         readonly
                     >
                 </div>
@@ -59,9 +61,9 @@
                         name="priority" 
                         disabled
                     >
-                        <option value="" disabled selected>Select Priority</option>
+                        <option value="" disabled>Select Priority</option>
                         <option value="1">1 - Low</option>
-                        <option value="2">2 - Medium</option>
+                        <option value="2" selected>2 - Medium</option> <!-- Default priority -->
                         <option value="3">3 - High</option>
                     </select>
                 </div>
@@ -75,4 +77,3 @@
         <img class="w-75 mt-5" src="https://img.freepik.com/free-vector/scrum-board-concept-illustration_114360-1591.jpg?t=st=1735672628~exp=1735676228~hmac=b35ef46c19c127d16584bd99a79901dd024a5e418d06817ed5561c285ccb7d32&w=740" alt="Task Board">
     </div>
 </div>
-

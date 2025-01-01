@@ -4,12 +4,14 @@ import { AuthService } from './auth/auth.service';
 //import { CommonService, toastPayload } from './services/common.service';
 //import { IndividualConfig } from 'ngx-toastr';
 
+// import{jsPDF} from'jspdf';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   title = '';
   notificationsCount = 5; // Example: Replace with dynamic count
   showNotificationList = false; // To toggle notification visibility

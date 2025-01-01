@@ -1,0 +1,101 @@
+<!-- <div class="container">
+  <h2>File Attach</h2>
+  <div class="form-group">
+    <label for="fileInput">Attach Files</label>
+    <input
+      type="file"
+      id="fileInput"
+      (change)="onFileSelected($event)"
+      class="form-control"
+      multiple
+    />
+  </div>
+  <div class="mt-4">
+    <h3>Attached Files</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Size (KB)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of attachedFiles; let i = index">
+          <td>{{ file.name }}</td>
+          <td>{{ (file.size / 1024).toFixed(2) }}</td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="removeFile(i)"
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> -->
+<div class="container">
+  <h2>File Attach</h2>
+
+  <!-- Task Name Dropdown -->
+  <div class="form-group">
+    <label for="taskSelect">Select Task</label>
+    <select
+      id="taskSelect"
+      [(ngModel)]="selectedTask"
+      name="taskSelect"
+      class="form-control"
+      required
+    >
+      <option value="" disabled>Select a Task</option>
+      <option *ngFor="let task of taskList" [value]="task.id">
+        {{ task.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- File selection -->
+  <div class="form-group mt-3">
+    <label for="fileInput">Attach Files</label>
+    <input
+      type="file"
+      id="fileInput"
+      (change)="onFileSelected($event)"
+      class="form-control"
+      multiple
+    />
+  </div>
+
+  <!-- File list display -->
+  <div class="mt-4">
+    <h3>Attached Files</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Task Name</th>
+          <th>File Name</th>
+          <th>Size (KB)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of attachedFiles; let i = index">
+          <td>{{ file.taskName }}</td>
+          <td>{{ file.name }}</td>
+          <td>{{ (file.size / 1024).toFixed(2) }}</td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="removeFile(i)"
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

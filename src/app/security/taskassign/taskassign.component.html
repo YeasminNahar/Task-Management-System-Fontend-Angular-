@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="container mt-5">
+            <h2 class="mb-4">Assign Task</h2>
+            <form>
+                <!-- Task Dropdown -->
+                <div class="mb-3">
+                    <label for="task" class="form-label">Task</label>
+                    <select class="form-select" id="task" name="task" required>
+                        <option value="" disabled selected>Select Task</option>
+                        <option value="1">Task 1</option>
+                        <option value="2">Task 2</option>
+                        <option value="3">Task 3</option>
+                    </select>
+                </div>
+
+                <!-- Member Dropdown -->
+                <div class="mb-3">
+                    <label for="member" class="form-label">Assign To</label>
+                    <select class="form-select" id="member" name="member" required>
+                        <option value="" disabled selected>Select Member</option>
+                        <option value="1">John Doe</option>
+                        <option value="2">Jane Smith</option>
+                        <option value="3">Mark Taylor</option>
+                    </select>
+                </div>
+
+                <!-- Description (Readonly) -->
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea 
+                        class="form-control" 
+                        id="description" 
+                        name="description" 
+                        rows="3" 
+                        placeholder="Enter Description" 
+                        readonly
+                    ></textarea>
+                </div>
+
+                <!-- Deadline (Readonly) -->
+                <div class="mb-3">
+                    <label for="deadline" class="form-label">Deadline</label>
+                    <input 
+                        type="datetime-local" 
+                        class="form-control" 
+                        id="deadline" 
+                        name="deadline" 
+                        readonly
+                    >
+                </div>
+
+                <!-- Priority (Disabled Dropdown) -->
+                <div class="mb-3">
+                    <label for="priority" class="form-label">Priority</label>
+                    <select 
+                        class="form-select" 
+                        id="priority" 
+                        name="priority" 
+                        disabled
+                    >
+                        <option value="" disabled selected>Select Priority</option>
+                        <option value="1">1 - Low</option>
+                        <option value="2">2 - Medium</option>
+                        <option value="3">3 - High</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Assign Task</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <img class="w-75 mt-5" src="https://img.freepik.com/free-vector/scrum-board-concept-illustration_114360-1591.jpg?t=st=1735672628~exp=1735676228~hmac=b35ef46c19c127d16584bd99a79901dd024a5e418d06817ed5561c285ccb7d32&w=740" alt="Task Board">
+    </div>
+</div>
+

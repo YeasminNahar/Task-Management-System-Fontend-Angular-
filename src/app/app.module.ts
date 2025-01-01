@@ -9,10 +9,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 //import { NgChartsModule } from 'ng2-charts';
 import { TaskComponent } from './security/tasks/task.component';
-
+import { ReportsComponent } from './security/reports/reports.component';
 import { TaskCategoryComponent } from './security/category/taskcategory.component';
+import {TaskDetailsComponent} from './security/task-details/task-details.component';
 import { CompanyComponent } from './security/company/company.component';
 import { MemberComponent } from './security/member-registration/member-registration.component';
+import { FileAttachComponent } from './file-attach/file-attach.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DatePipe } from '@angular/common';
@@ -23,7 +25,9 @@ import { DatePipe } from '@angular/common';
     CompanyComponent,
     TaskCategoryComponent,
     TaskComponent,
+
     MemberComponent,
+    FileAttachComponent,
     LoginComponent,
     DashboardComponent
   ],
@@ -33,9 +37,12 @@ import { DatePipe } from '@angular/common';
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot()//,
+    ToastrModule.forRoot() //,
     //NgChartsModule
-  ],
+    ,
+    ReportsComponent,
+    TaskDetailsComponent
+],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })

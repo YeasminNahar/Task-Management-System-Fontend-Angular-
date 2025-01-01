@@ -1,5 +1,14 @@
-<a href="javascript:void(0)" *ngIf="!isList;" (click)="isList=true;reset()" class="btn-list1">List Tasks</a>
-<a href="javascript:void(0)" *ngIf="isList" (click)="isList=false;reset();getTaskCategories()" class="btn-new1">Add New Task</a>
+<a 
+  href="javascript:void(0)" 
+  *ngIf="!isList" 
+  class="btn btn-outline-secondary" 
+  (click)="isList = true; reset()"> Task List</a>
+
+<a 
+  href="javascript:void(0)" 
+  *ngIf="isList" 
+  class="btn btn-outline-primary" 
+  (click)="isList = false; reset()"> Add New Task</a>
 
 <div *ngIf="isList">
     <div class="row">

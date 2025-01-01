@@ -10,13 +10,22 @@ import { CommonService, toastPayload } from 'src/app/services/common.service';
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent {
+
+  // Flags to toggle between list and new task views
   isList: boolean = true;
   isNew: boolean = true;
   toast!: toastPayload;
 
+  // Pagination properties
+  pageIndex: number = 0;
+  pageSize: number = 10;
+  rowCount: number = 0;
+  listPageSize: any = [5, 10, 20];
+  pager: { pages: number[], totalPages: number } = { pages: [], totalPages: 0 };
+
+  // Task data properties
   listTasks: any = [];
   listTaskCategories: any = [];
-
   Task: {
     taskID: number,
     description: string,
@@ -39,26 +48,16 @@ export class TaskComponent {
     isActive: true
   };
 
-  pageIndex: number = 0;
-  pageSize: number = 10;
-  rowCount: number = 0;
-  listPageSize: any = [5, 10, 20];
-  pager: { pages: number[], totalPages: number } = { // Explicitly typed as number[]
-    pages: [],
-    totalPages: 0
-  };
-
-  constructor(private cs: CommonService,
-              private httpClient: HttpClient,
-              public authService: AuthService) {
+  // Constructor with necessary service injections
+  constructor(
+    private cs: CommonService,
+    private httpClient: HttpClient,
+    public authService: AuthService
+  ) {
     this.get();
     this.getTaskCategories();
   }
 
-  ngOnInit(): void {
-    this.get();
-    this.getTaskCategories();
-  }
 
   // Fetch all tasks with pagination
   get(): void {
@@ -99,7 +98,7 @@ export class TaskComponent {
       });
   }
 
-  // Populate form for editing
+  // Edit task for updating
   edit(item: any): void {
     this.Task = {
       taskID: item.taskID,
@@ -175,7 +174,7 @@ export class TaskComponent {
       });
   }
 
-  // Validate the form before submitting
+  // Validate form before submitting
   validateForm(): boolean {
     let isValid = true;
 
@@ -246,7 +245,7 @@ export class TaskComponent {
     this.cs.showToast(this.toast);
   }
 
-  // Update the pager object based on the total number of rows and page size
+  // Update pager based on row count and page size
   updatePager() {
     const totalPages = Math.ceil(this.rowCount / this.pageSize);
     this.pager.totalPages = totalPages;

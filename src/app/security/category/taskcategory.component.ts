@@ -10,6 +10,7 @@ import { CommonService, toastPayload } from 'src/app/services/common.service';
   styleUrls: ['./taskcategory.component.css']
 })
 export class TaskCategoryComponent {
+ 
   isList: boolean = true;
   isNew: boolean = true;
   toast!: toastPayload;

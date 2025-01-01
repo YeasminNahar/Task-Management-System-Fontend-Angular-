@@ -1,0 +1,55 @@
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="container mt-5">
+            <h2 class="mb-4">Task Details</h2>
+            <form>
+                <!-- Task ID -->
+                <div class="mb-3">
+                    <label for="priority" class="form-label">Task</label>
+                    <select class="form-select" id="priority" name="priority" required>
+                        <option value="" disabled selected>Task</option>
+                        <option value="1">TAsk 1 </option>
+                        <option value="2"> Task 2 </option>
+                        <option value="3"> Task 3 </option>
+                    </select>
+                </div>
+    
+                <!-- Description -->
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter Description" required></textarea>
+                </div>
+    
+                <!-- Deadline -->
+                <div class="mb-3">
+                    <label for="deadline" class="form-label">Deadline</label>
+                    <input type="datetime-local" class="form-control" id="deadline" name="deadline" required>
+                </div>
+    
+                <!-- Is Complete -->
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="isComplete" name="isComplete">
+                    <label class="form-check-label" for="isComplete">Is Complete</label>
+                </div>
+    
+                <!-- Priority -->
+                <div class="mb-3">
+                    <label for="priority" class="form-label">Priority</label>
+                    <select class="form-select" id="priority" name="priority" required>
+                        <option value="" disabled selected>Select Priority</option>
+                        <option value="1">1 - Low</option>
+                        <option value="2">2 - Medium</option>
+                        <option value="3">3 - High</option>
+                    </select>
+                </div>
+    
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <img class="w-75 mt-5" src="https://img.freepik.com/free-vector/scrum-board-concept-illustration_114360-1591.jpg?t=st=1735672628~exp=1735676228~hmac=b35ef46c19c127d16584bd99a79901dd024a5e418d06817ed5561c285ccb7d32&w=740" alt="">
+    </div>
+</div>

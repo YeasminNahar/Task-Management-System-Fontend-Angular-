@@ -1,0 +1,26 @@
+.list-button {
+    color: white;
+    background-color: blue;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 50px;
+  }
+  
+  .new-button {
+    color: white;
+    background-color: rgb(95, 155, 244);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 50px;
+  }
+  
+  .list-button:hover,
+  .new-button:hover {
+    opacity: 0.8;
+  }

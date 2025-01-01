@@ -26,7 +26,7 @@ export class CalendarViewComponent implements OnInit {
   currentYear: number = new Date().getFullYear();
   tasks = [
     { date: new Date(2025, 0, 5), details: 'Complete design review ' },
-    { date: new Date(2025, 1, 14), details: 'Valentine\'s Day event' },
+    { date: new Date(2025, 1, 14), details: 'PDF generate Task' },
     { date: new Date(2025, 5, 20), details: 'Team meeting' },
     { date: new Date(2025, 10, 25), details: 'Christmas Celebration' },
   ];

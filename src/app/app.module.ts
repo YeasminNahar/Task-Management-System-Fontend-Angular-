@@ -17,8 +17,10 @@ import {TaskDetailsComponent} from './security/task-details/task-details.compone
 import {CalendarViewComponent} from './security/calendar-view/calendar-view.component';
 import {TaskassignComponent} from './security/taskassign/taskassign.component';
 import { CompanyComponent } from './security/company/company.component';
+import { DepartmentComponent } from './security/department/department.component';
 import { MemberComponent } from './security/member-registration/member-registration.component';
 import { FileAttachComponent } from './file-attach/file-attach.component';
+
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DatePipe } from '@angular/common';
@@ -49,6 +51,7 @@ import { DatePipe } from '@angular/common';
     CommonModule,
     TaskDetailsComponent,
     ReactiveFormsModule,
+    
     TaskassignComponent
 
 ],

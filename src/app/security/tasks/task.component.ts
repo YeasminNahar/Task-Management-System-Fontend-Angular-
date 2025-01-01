@@ -61,6 +61,7 @@ export class TaskComponent {
 
   // Fetch all tasks with pagination
   get(): void {
+    debugger
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
@@ -73,7 +74,7 @@ export class TaskComponent {
     this.httpClient.get(this.authService.baseURL + '/api/Task', { headers: oHttpHeaders, params: params })
       .subscribe((res: any) => {
         if (res) {
-          this.listTasks = res.tasks;
+          this.listTasks = res;
           this.rowCount = res.totalCount;
           this.updatePager();
         } else {
@@ -209,21 +210,21 @@ export class TaskComponent {
         this.showMessage('success', 'Task updated successfully.');
       });
   }
-
+ 
   // Confirm task deletion
-  removeConfirm(task: { taskID: number, description: string }) {
+  removeConfirm(task: { taskID: number, description: string }): void {
     this.Task.taskID = task.taskID;
     this.Task.description = task.description;
   }
 
   // Remove a task
-  remove(task: { taskID: number, description: string }) {
+  remove(task: { taskID: number, description: string }) : void{
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
 
     this.httpClient.delete(this.authService.baseURL + '/api/Task/' + task.taskID, { headers: oHttpHeaders })
-      .subscribe((res) => {
+      .subscribe(() => {
         this.isList = true;
         this.reset();
         this.get();

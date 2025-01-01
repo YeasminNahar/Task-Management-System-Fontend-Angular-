@@ -55,6 +55,39 @@
     border-bottom: 1px solid #ddd;
     text-align: center;
   }
-  
-  
-  
+  /*Aikhanae Side bar ar design dau a hoicha*/
+  .sidebar {
+    background: linear-gradient(to bottom, #100f11, #0c0c0c); /* Gradient background */
+    color: white;
+    height: 100vh; /* Full viewport height */
+    width: 200px; /* Adjust the width as needed */
+    border-radius: 0 20px 20px 0; /* Rounded corners on the right side */
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin: 10px 0;
+}
+
+.sidebar li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.sidebar li a:hover {
+    background: #1abc9c; /* Highlight on hover */
+    color: white;
+    text-decoration: none;
+}

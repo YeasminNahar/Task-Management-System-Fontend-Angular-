@@ -14,6 +14,8 @@ import {TaskassignComponent} from './security/taskassign/taskassign.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MemberInvitationComponent } from './security/memberinvitation/memberinvitation.component';
+import { DepartmentComponent } from './security/department/department.component';
+
 /*import { TestComponent } from '@angular/core/testing';*/
 import {CalendarViewComponent} from './security/calendar-view/calendar-view.component';
 
@@ -31,6 +33,7 @@ const routes: Routes = [
   { path: 'memberinvitation', component: MemberInvitationComponent },
   { path: 'file-attach', component: FileAttachComponent },
   { path: 'calendar-view', component: CalendarViewComponent },
+  { path: 'department', component: DepartmentComponent },
   
   { path: 'dashboard', component: DashboardComponent, canActivate:[authGuard] }
 ];

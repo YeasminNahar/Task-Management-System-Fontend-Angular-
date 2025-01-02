@@ -1,13 +1,14 @@
+<div class="mt-4"></div>
 <a 
   href="javascript:void(0)" 
   *ngIf="!isList" 
-  class="btn btn-outline-secondary" 
+  class="btn btn-outline-secondary mb-2" 
   (click)="isList = true; reset()"> Task List</a>
 
 <a 
   href="javascript:void(0)" 
   *ngIf="isList" 
-  class="btn btn-outline-primary" 
+  class="btn btn-outline-primary mb-2" 
   (click)="isList = false; reset()"> Add New Task</a>
 
 <div *ngIf="isList">

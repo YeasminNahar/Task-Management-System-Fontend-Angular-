@@ -50,7 +50,7 @@ export class MemberComponent {
   // Validate the form
   validateForm(): boolean {
     let isValid: boolean = true;
-    if (!this.Member.name || !this.Member.email || !this.Member.password) {
+    if (!this.Member.MemberName || !this.Member.Email || !this.Member.Password) {
       isValid = false;
       this.showMessage('warning', 'All fields are required.');
     }
@@ -63,7 +63,7 @@ export class MemberComponent {
       'Token': this.authService.UserInfo.Token
     });
 
-    this.httpClient.post(this.authService.baseURL + '/api/Member', this.Member, { headers: oHttpHeaders }).subscribe((res) => {
+    this.httpClient.post(this.authService.baseURL + '/api/Member/CreateMember', this.Member, { headers: oHttpHeaders }).subscribe((res) => {
       this.isList = true;
       this.get();
       this.showMessage('success', 'Member added successfully.');
@@ -76,7 +76,7 @@ export class MemberComponent {
       'Token': this.authService.UserInfo.Token
     });
 
-    this.httpClient.put(this.authService.baseURL + '/api/Member/' + this.Member.memberID, this.Member, { headers: oHttpHeaders }).subscribe((res) => {
+    this.httpClient.put(this.authService.baseURL + '/api/Member/' + this.Member.MemberId, this.Member, { headers: oHttpHeaders }).subscribe((res) => {
       this.isList = true;
       this.get();
       this.showMessage('success', 'Member updated successfully.');
@@ -84,30 +84,30 @@ export class MemberComponent {
   }
 
   // Handle file input for picture
-  onFileChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      // You can implement file validation or upload logic here
-      this.Member.picture = file;
-    }
-  }
+  // onFileChange(event: any) {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     // You can implement file validation or upload logic here
+  //     this.Member.picture = file;
+  //   }
+  // }
 
   listMembers: any = [];
 
   // Member object with Password and Picture added
   Member: {
-    memberID: number,
-    name: string,
-    email: string,
-    password: string,   // Added password property
-    picture: File | null,  // Added picture property (File type)
+    MemberId: number,
+    MemberName: string,
+    Email: string,
+    Password: string,   // Added password property
+    // Added picture property (File type)
     isActive: boolean
   } = {
-    memberID: 0,
-    name: "",
-    email: "",
-    password: "",   // Initialize password property
-    picture: null,   // Initialize picture property
+    MemberId: 0,
+    MemberName: "",
+    Email: "",
+    Password: "",   // Initialize password property
+       // Initialize picture property
     isActive: true
   };
 

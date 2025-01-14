@@ -88,27 +88,56 @@
             </select>
         </div>
 
+        <div class="col-md-6 d-none">
+
+        
+            <input type="hidden" id="TaskId" [(ngModel)]="Task.TaskId" class="form-control" />
+            <input type="hidden" id="isActive" [(ngModel)]="Task.isActive" class="form-control" />
+            <input type="hidden" id="createBy" [(ngModel)]="Task.createBy" class="form-control" />
+            <input type="hidden" id="createDate" [(ngModel)]="Task.createDate" class="form-control" />
+            <input type="hidden" id="updateDate" [(ngModel)]="Task.updateDate" class="form-control" />
+
+        </div>
+
         <div class="col-md-12 mt-5">
-            <button type="button" class="btn btn-secondary" *ngIf="Task.taskID > 0" (click)="update()">Update</button>
-            <button type="button" class="btn btn-primary" *ngIf="Task.taskID == 0" (click)="add()">Add</button>
+            <button type="button" class="btn btn-secondary" *ngIf="Task.TaskId > 0" (click)="update()">Update</button>
+            <button type="button" class="btn btn-primary" *ngIf="Task.TaskId == 0" (click)="add()">Add</button>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-primary">Are you sure to remove?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-danger">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" (click)="reset()">No</button> /
-                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" (click)="remove(Task)">Yes</button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
+<!-- Confirmation Modal -->
+<div 
+  class="modal fade" 
+  id="confirmModal" 
+  tabindex="-1" 
+  aria-labelledby="confirmModalLabel" 
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger" id="confirmModalLabel">Confirm Deletion</h5>
+        <button 
+          type="button" 
+          class="btn-close" 
+          data-bs-dismiss="modal" 
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete <strong>{{ Task.description }}</strong>?</p>
+      </div>
+      <div class="modal-footer">
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary" 
+          data-bs-dismiss="modal" 
+          (click)="reset()">Cancel</button>
+        <button 
+          type="button" 
+          class="btn btn-outline-danger" 
+          data-bs-dismiss="modal" 
+          (click)="remove(Task)">Delete</button>
+      </div>
     </div>
+  </div>
 </div>

@@ -9,14 +9,14 @@
             <form (ngSubmit)="onSubmit()" #registrationForm="ngForm">
               <!-- Name Field -->
               <div>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" [(ngModel)]="Member.name" required />
+                <label for="name">Member Name:</label>
+                <input type="text" id="name" name="name" [(ngModel)]="Member.MemberName" required />
               </div>
   
               <!-- Email Field -->
               <div>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" [(ngModel)]="Member.email" required />
+                <input type="email" id="email" name="email" [(ngModel)]="Member.Email" required />
               </div>
   
               <!-- Is Active Field -->
@@ -28,14 +28,14 @@
               <!-- Password Field -->
               <div>
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" [(ngModel)]="Member.password" required />
+                <input type="password" id="password" name="password" [(ngModel)]="Member.Password" required />
               </div>
   
               <!-- Picture Field -->
-              <div>
+              <!-- <div>
                 <label for="picture">Picture:</label>
                 <input type="file" id="picture" name="picture" (change)="onFileChange($event)" />
-              </div>
+              </div> -->
   
               <button type="submit">{{ isNew ? 'Add Member' : 'Update Member' }}</button>
             </form>

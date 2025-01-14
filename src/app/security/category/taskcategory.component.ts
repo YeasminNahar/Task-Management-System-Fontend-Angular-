@@ -36,7 +36,8 @@ export class TaskCategoryComponent {
     private cs: CommonService,
     private httpClient: HttpClient,
     public authService: AuthService
-  ) {
+  ) 
+  {
     this.get();
   }
 
@@ -67,6 +68,7 @@ export class TaskCategoryComponent {
 
     };
     this.isList = false;
+    console.log(item);
   }
 
   validateForm(): boolean {
@@ -95,6 +97,7 @@ export class TaskCategoryComponent {
   }
 
   add(): void {
+
     if (!this.validateForm()) {
       this.showMessage('error', 'Task Category name is required.');
       return;

@@ -27,7 +27,7 @@ export class TaskComponent {
   listTasks: any = [];
   listTaskCategories: any = [];
   Task: {
-    taskID: number,
+    TaskId: number,
     description: string,
     deadLine: string,
     taskCategoryID: number,
@@ -37,16 +37,16 @@ export class TaskComponent {
     createDate: any,
     updateDate: any,
   } = {
-    taskID: 0,
-    description: "",
-    deadLine: "",
-    taskCategoryID: 0,
-    updateBy: '',
-    createBy: '',
-    createDate: '',
-    updateDate: '',
-    isActive: true
-  };
+      TaskId: 0,
+      description: "",
+      deadLine: "",
+      taskCategoryID: 0,
+      updateBy: '',
+      createBy: '',
+      createDate: '',
+      updateDate: '',
+      isActive: true
+    };
 
   // Constructor with necessary service injections
   constructor(
@@ -61,7 +61,7 @@ export class TaskComponent {
 
   // Fetch all tasks with pagination
   get(): void {
-    debugger
+    // debugger
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
@@ -71,16 +71,18 @@ export class TaskComponent {
       pageSize: this.pageSize.toString()
     };
 
-    this.httpClient.get(this.authService.baseURL + '/api/Task', { headers: oHttpHeaders, params: params })
-      .subscribe((res: any) => {
-        if (res) {
-          this.listTasks = res;
-          this.rowCount = res.totalCount;
-          this.updatePager();
-        } else {
-          this.showMessage('warning', 'Session expired, please login.');
-        }
-      });
+    // this.httpClient.get(this.authService.baseURL + '/api/Task', { headers: oHttpHeaders, params: params })
+    this.httpClient.get(this.authService.baseURL + '/api/Task/GetTask', { headers: oHttpHeaders })
+    .subscribe((res: any) => {
+      console.log('API Response:', res); // Check if taskId is present and correctly formatted
+      if (res) {
+        this.listTasks = res;
+        this.rowCount = res.totalCount;
+        this.updatePager();
+      } else {
+        this.showMessage('warning', 'Session expired, please login.');
+      }
+    });
   }
 
   // Fetch Task Categories for the dropdown
@@ -101,11 +103,13 @@ export class TaskComponent {
 
   // Edit task for updating
   edit(item: any): void {
+    console.log("Edit Item: ", item); // Log the item for debugging
+
     this.Task = {
-      taskID: item.taskID,
+      TaskId: item.taskId, // Map taskId (API response) to TaskId
       description: item.description,
-      deadLine: item.deadLine,
-      taskCategoryID: item.taskCategoryID,
+      deadLine: item.deadLine ? item.deadLine.split('T')[0] : '', // Ensure "yyyy-MM-dd" format
+      taskCategoryID: item.taskCategoryId, // Use taskCategoryId from the response
       isActive: item.isActive,
       updateBy: item.updateBy,
       createBy: item.createBy,
@@ -113,12 +117,15 @@ export class TaskComponent {
       updateDate: item.updateDate,
     };
     this.isList = false;
+
+    console.log(this.Task); // Log the updated Task object for debugging
   }
+
 
   // Reset the form
   reset() {
     this.Task = {
-      taskID: 0,
+      TaskId: 0,
       description: "",
       deadLine: "",
       taskCategoryID: 0,
@@ -158,7 +165,7 @@ export class TaskComponent {
       'Token': this.authService.UserInfo.Token,
     });
 
-    this.httpClient.post(this.authService.baseURL + '/api/Task', payload, { headers: oHttpHeaders })
+    this.httpClient.post(this.authService.baseURL + '/api/Task/PostTask', payload, { headers: oHttpHeaders })
       .subscribe({
         next: (res) => {
           this.isList = true;
@@ -196,41 +203,70 @@ export class TaskComponent {
   // Update an existing task
   update(): void {
     if (!this.validateForm()) {
+      console.log(this.Task)
+      console.log('Task in update:', this.Task);
       return;
     }
 
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
+    alert(this.Task.TaskId)
 
-    this.httpClient.put(this.authService.baseURL + '/api/Task/' + this.Task.taskID, this.Task, { headers: oHttpHeaders })
-      .subscribe((res) => {
-        this.isList = true;
-        this.get();
-        this.showMessage('success', 'Task updated successfully.');
+    this.httpClient.put(this.authService.baseURL + '/api/Task/PutTask' + this.Task.TaskId, this.Task, { headers: oHttpHeaders })
+      .subscribe({
+        next: () => {
+          this.isList = true;
+          this.get();
+          this.showMessage('success', 'Data updated successfully.');
+        },
+        error: (err) => {
+          console.error('Update failed:', err.error || err.message);
+          this.showMessage('error', `Update failed: ${err.error?.message || 'Unknown error.'}`);
+        },
       });
+
   }
- 
+
   // Confirm task deletion
-  removeConfirm(task: { taskID: number, description: string }): void {
-    this.Task.taskID = task.taskID;
+  removeConfirm(task: { taskId: number, description: string }): void {
+    this.Task.TaskId = task.taskId;
     this.Task.description = task.description;
   }
 
   // Remove a task
-  remove(task: { taskID: number, description: string }) : void{
+  
+  remove(task: { TaskId: number, description: string }): void {
+    console.log('Task object:', task); // Log the task object
+    if (!task.TaskId) {
+      console.error('TaskId is undefined!');
+      return;
+    }
+  
+    alert(task.TaskId); // Verify TaskId before proceeding
+  
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
-
-    this.httpClient.delete(this.authService.baseURL + '/api/Task/' + task.taskID, { headers: oHttpHeaders })
-      .subscribe(() => {
+  
+    this.httpClient.delete(`${this.authService.baseURL}/api/Task/DeleteTask${task.TaskId}`, {
+      headers: oHttpHeaders,
+      responseType: 'text' // Expect a plain text response
+    }).subscribe({
+      next: (res: any) => {
+        console.log('Delete response:', res); // Log success message
         this.isList = true;
         this.reset();
         this.get();
-        this.showMessage('success', 'Task removed successfully.');
-      });
+        this.showMessage('success', res || 'Task removed successfully.');
+      },
+      error: (err) => {
+        console.error('Failed to delete task:', err.error || err.message);
+        this.showMessage('error', `Failed to remove task: ${err.error?.message || 'Unknown error.'}`);
+      }
+    });
   }
+  
 
   // Display messages using toastr
   showMessage(type: string, message: string) {

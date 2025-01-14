@@ -1,6 +1,12 @@
 /* Full page background */
 body {
-  background-color: #f4f6f9;
+  background: linear-gradient(135deg, #6cbefb, #54e1c6);
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
 }
 
 /* Center the card on the page */
@@ -10,51 +16,70 @@ body {
 
 /* Card styling */
 .card {
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: white;
 }
 
 /* Card header styling */
 .card-header {
   background-color: #007bff;
   color: white;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  padding: 15px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding: 20px;
+  text-transform: uppercase;
 }
 
 .card-header h4 {
   margin: 0;
+  font-weight: bold;
 }
 
 /* Form styling */
-.form-label {
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
   font-weight: bold;
 }
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"]
+ {
   border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
 
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  margin-top: 5px;
+  margin-top: 2%;
+  margin-bottom: 4%;
+  margin-left: 10px;
 }
 
-.btn {
+button {
   width: 100%;
   border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 8%;
+  border: none;
+  transition: background-color 0.3s ease-in-out;
 }
 
 /* Button hover effect */
-.btn:hover {
+button:hover {
   background-color: #0056b3;
-  border-color: #0056b3;
 }
 
-.text-center {
-  margin-top: 20px;
-}
+

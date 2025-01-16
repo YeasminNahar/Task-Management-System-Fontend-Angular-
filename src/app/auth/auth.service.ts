@@ -111,6 +111,9 @@ export class AuthService {
       this.UserInfo.UserName = userInfo.userName;
       this.UserInfo.Token = userInfo.passWord;
       this.UserInfo.UserID = userInfo.userId;
+      localStorage.setItem('user',userInfo.userName)
+      //this.UserInfo.Permissions = userInfo.P)
+      //this.UserInfo.Permissions = userInfo.P)
       //this.UserInfo.Permissions = userInfo.Permissions;
       this.UserInfo.RedirectURL = '/dashboard';
       //this.UserInfo.nNotify = userInfo.nNotify;
@@ -126,7 +129,9 @@ export class AuthService {
       //   listModule.push(oModule);
       // }
       // this.UserInfo.ModuleMenus = listModule;
+      localStorage.setItem('uName',JSON.stringify(this.UserInfo.UserName));
       localStorage.setItem('UserInfo',JSON.stringify(this.UserInfo));
+      localStorage.setItem('User',this.UserInfo.UserName);
     } else {
       this.logout();
     }

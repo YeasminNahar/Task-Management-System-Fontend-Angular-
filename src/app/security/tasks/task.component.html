@@ -41,7 +41,7 @@
             <tr *ngFor="let item of listTasks">
                 <td>{{item.description}}</td>
                 <td>{{item.deadLine | date:'shortDate'}}</td>
-                <td>{{item.taskCategory?.name}}</td>
+                <td>{{item.taskCategory}}</td>
                 <td>
                     <button class="btn btn-sm btn-outline-primary" (click)="edit(item)">Edit</button>
                     <button class="btn btn-sm btn-outline-primary" (click)="removeConfirm(item)" data-bs-toggle="modal" data-bs-target="#confirmModal">Delete</button>

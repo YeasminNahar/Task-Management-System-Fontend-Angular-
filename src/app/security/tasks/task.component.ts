@@ -115,6 +115,7 @@ export class TaskComponent {
       createBy: item.createBy,
       createDate: item.createDate,
       updateDate: item.updateDate,
+      
     };
     this.isList = false;
 
@@ -213,7 +214,7 @@ export class TaskComponent {
     });
     alert(this.Task.TaskId)
 
-    this.httpClient.put(this.authService.baseURL + '/api/Task/PutTask' + this.Task.TaskId, this.Task, { headers: oHttpHeaders })
+    this.httpClient.put(this.authService.baseURL + '/api/Task/PutTask/' + this.Task.TaskId, this.Task, { headers: oHttpHeaders })
       .subscribe({
         next: () => {
           this.isList = true;
@@ -237,35 +238,34 @@ export class TaskComponent {
   // Remove a task
   
   remove(task: { TaskId: number, description: string }): void {
-    console.log('Task object:', task); // Log the task object
     if (!task.TaskId) {
       console.error('TaskId is undefined!');
       return;
     }
   
-    alert(task.TaskId); // Verify TaskId before proceeding
-  
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
   
-    this.httpClient.delete(`${this.authService.baseURL}/api/Task/DeleteTask${task.TaskId}`, {
+    this.httpClient.delete(`${this.authService.baseURL}/api/Task/DeleteTask/${task.TaskId}`, {
       headers: oHttpHeaders,
-      responseType: 'text' // Expect a plain text response
+      responseType: 'text'
     }).subscribe({
       next: (res: any) => {
-        console.log('Delete response:', res); // Log success message
+        console.log('Delete response:', res);
         this.isList = true;
         this.reset();
         this.get();
         this.showMessage('success', res || 'Task removed successfully.');
       },
       error: (err) => {
-        console.error('Failed to delete task:', err.error || err.message);
-        this.showMessage('error', `Failed to remove task: ${err.error?.message || 'Unknown error.'}`);
+        console.error('Failed to delete task:', err);
+        console.log('Error Details:', JSON.stringify(err, null, 2));
+        this.showMessage('error', `Failed to remove task: ${err.error?.message || err.message || 'Unknown error.'}`);
       }
     });
   }
+  
   
 
   // Display messages using toastr

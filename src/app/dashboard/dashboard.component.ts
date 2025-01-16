@@ -31,37 +31,67 @@
   // public lineChartType = 'line';
   // public lineChartPlugins = [];
 // }
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
   @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css']
   })
-  export class DashboardComponent implements OnInit {
+
+  export class DashboardComponent  {
+//api/Task/GetTaskCountByUsername
+username=localStorage.getItem('user');
+pendingTask: number = 0;
+completedTask: number = 0; // Default page size
+totalTask: number = 0;
+
+
     dashboardCounts: { title: string; count: number }[] = [];
   
-    constructor() {}
+    constructor(
+     public authService:AuthService,
+     private httpClient:HttpClient
+    ) {}
   
     ngOnInit() {
+      this.updateCounts();
       // Dynamic data (you can replace this with an API call)
-      this.dashboardCounts = [
-        { title: 'Pending Task', count: 5 },
-        { title: 'Complete Task', count: 10 },
-        { title: 'Total Task', count: 100 }
-      ];
-  
-      // Simulate dynamic updates
-      setInterval(() => {
-        this.updateCounts();
-      }, 5000); // Update counts every 5 seconds
+      
     }
   
     updateCounts() {
-      // Example of dynamic update logic
-      this.dashboardCounts.forEach((item) => {
-        item.count += Math.floor(Math.random() * 10); // Random increment
+      const hd=new HttpHeaders({
+        Token: this.authService.UserInfo.Token
       });
+
+      this.httpClient.get<any>(this.authService.baseURL+'/api/Task/GetTaskCountByUsername?username='+this.username,{headers:hd})
+      .subscribe({
+        next: (response) => {
+            if (response) {
+              console.log(response)
+                this.pendingTask = response.pendingTask;
+                this.completedTask = response.completeTask;
+                this.totalTask = response.totalTask;
+
+                this.dashboard();
+            }
+        },
+        error: (error) => {
+            console.error('Error fetching task counts:', error);
+        }
+    });
+    
+    }
+
+    dashboard(){
+      this.dashboardCounts = [
+        { title: 'Pending Task', count: this.pendingTask },
+        { title: 'Complete Task', count: this.completedTask },
+        { title: 'Total Task', count: this.totalTask }
+      ];
     }
   }
   

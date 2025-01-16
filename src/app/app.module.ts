@@ -37,7 +37,8 @@ import { DatePipe } from '@angular/common';
     MemberInvitationComponent,
     LoginComponent,
     CalendarViewComponent,
-    DashboardComponent
+    DashboardComponent,
+    TaskassignComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,7 @@ import { DatePipe } from '@angular/common';
     TaskDetailsComponent,
     ReactiveFormsModule,
     
-    TaskassignComponent
+  
 
 ],
   providers: [DatePipe],

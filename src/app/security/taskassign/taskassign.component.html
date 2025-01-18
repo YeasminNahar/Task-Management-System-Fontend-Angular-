@@ -26,7 +26,7 @@
         <tbody>
           <tr *ngFor="let item of listTaskAssign; let i = index">
             <td>{{ i + 1 }}</td>
-            <td>{{ item.description }}</td>
+            <td>{{ item.name }}</td>
             <td>{{ item.memberName }}</td>
             <td>
               <span [ngClass]="item.isActive ? 'text-success' : 'text-danger'">
@@ -35,7 +35,7 @@
             </td>
             <td>
               <button class="btn btn-warning btn-sm" (click)="edit(item)">Edit</button>
-              <button class="btn btn-danger btn-sm" (click)="remove(item)">Delete</button>
+              <button class="btn btn-danger btn-sm" (click)="remove(item.taskAssignId)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -64,7 +64,7 @@
           <label for="task" class="form-control">Task</label>
           <select id="task" class="form-select" [(ngModel)]="TaskAssign.TaskId" name="task" required>
             <option value="" >Select Task</option>
-            <option *ngFor="let task of listTasks" [value]="task.taskId">{{ task.description }}</option>
+            <option *ngFor="let task of listTasks" [value]="task.taskId">{{ task.name }}</option>
           </select>
         </div>
   

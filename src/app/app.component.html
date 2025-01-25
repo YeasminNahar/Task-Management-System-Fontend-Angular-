@@ -93,19 +93,19 @@
         <button class="btn btn-sm btn-outline-primary" [routerLink]="'/member-registration'" *ngIf="!authService.UserInfo.IsLogIn" type="button">Sign Up</button>
         <div *ngIf="authService.UserInfo.IsLogIn" class="position-relative ms-3">
           <button
-    class="btn btn-light position-relative"
-    type="button"
-    (click)="showNotifications()"
+  class="btn btn-light position-relative"
+  type="button"
+  (click)="showNotifications()"
+>
+  <i class="fa fa-bell"></i>
+  <span
+    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+    *ngIf="notificationsCount > 0"
   >
-    <i class="fa fa-bell"></i>
-    <span
-      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-      *ngIf="notificationsCount > 0"
-    >
-      {{ notificationsCount }}
-      <span class="visually-hidden">unread notifications</span>
-    </span>
-  </button>
+    {{ notificationsCount }}
+    <span class="visually-hidden">unread notifications</span>
+  </span>
+</button>
 
   <!-- Notification List -->
   <div *ngIf="showNotificationList" class="notification-dropdown">
@@ -118,17 +118,22 @@
       </li>
     </ul>
   </div>
-</div>
+  <!-- <button
+  class="btn btn-primary"
+  (click)="assignTaskNotification('New Task Name')"
+>
+  Assign Task
+</button> -->
+  </div>
         
       </form>
     </div>
   </div>
-  
 </nav>
 <div class="row">
-  <div class="col-md-2" *ngIf="authService.UserInfo.IsLogIn">
+  <div class="col-md-2" *ngIf="authService.UserInfo.UserName">
 
-    <div class="sidebar bg-dark text-white vh-100 ">
+    <div class="sidebar bg-dark text-white vh-100" *ngIf="authService.UserInfo.RoleId=== '3F8FFDB7-3EFB-4FDF-9504-8452548F2EE7'">
    <li style="list-style: none;">
     <h4 class="text-center"> <a class="nav-link text-white" routerLink="/dashboard"><i class="fa fa-bar-chart"></i> Dashboard</a></h4>
     <ul class="nav flex-column">

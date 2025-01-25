@@ -35,6 +35,7 @@ export class LoginComponent {
     this.showMessage('info', 'Your are logging, please wait....');
     this.httpClient.post(this.authService.baseURL + '/api/Login', this.User).subscribe((res) => {
       var isLogIn:boolean = false;
+      //console.log(res);
       if(res != null){
         isLogIn = true;
       }else{

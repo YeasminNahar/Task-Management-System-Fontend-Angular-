@@ -8,6 +8,7 @@ export class AuthService {
   //isLogIn:boolean = false;
   UserInfo:{
     UserName:string,
+    RoleId:string,
     IsLogIn:boolean
     UserID:number,
     Token:string,
@@ -38,6 +39,7 @@ export class AuthService {
     // }
   } = {
     UserName:'',
+    RoleId:'',
     IsLogIn:false,
     UserID:0,
     Token:'',
@@ -96,6 +98,7 @@ export class AuthService {
   constructor() { 
     const strUserInfo = localStorage.getItem("UserInfo");
     if (typeof strUserInfo === 'string') {
+        //console.log(this.UserInfo);
         this.UserInfo = JSON.parse(strUserInfo);
     }
   }
@@ -106,9 +109,11 @@ export class AuthService {
   //redirectUrl: string | null = null;
   login(userInfo:any, isLogIn:boolean):Observable<boolean> {
     this.reset();
+    
     if(isLogIn){
       this.UserInfo.IsLogIn = isLogIn;
       this.UserInfo.UserName = userInfo.userName;
+      this.UserInfo.RoleId = userInfo.roleId;
       this.UserInfo.Token = userInfo.passWord;
       this.UserInfo.UserID = userInfo.userId;
       localStorage.setItem('user',userInfo.userName)
@@ -132,6 +137,7 @@ export class AuthService {
       localStorage.setItem('uName',JSON.stringify(this.UserInfo.UserName));
       localStorage.setItem('UserInfo',JSON.stringify(this.UserInfo));
       localStorage.setItem('User',this.UserInfo.UserName);
+      console.log(this.UserInfo);
     } else {
       this.logout();
     }

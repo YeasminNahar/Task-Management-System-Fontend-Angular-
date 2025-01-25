@@ -34,6 +34,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
   @Component({
     selector: 'app-dashboard',
@@ -47,11 +48,13 @@ username=localStorage.getItem('user');
 pendingTask: number = 0;
 completedTask: number = 0; // Default page size
 totalTask: number = 0;
+status : number = 10;
 
 
-    dashboardCounts: { title: string; count: number }[] = [];
+    dashboardCounts: { taskStatus: string; title: string; count: number }[] = [];
   
     constructor(
+      private router:Router,
      public authService:AuthService,
      private httpClient:HttpClient
     ) {}
@@ -88,10 +91,29 @@ totalTask: number = 0;
 
     dashboard(){
       this.dashboardCounts = [
-        { title: 'Pending Task', count: this.pendingTask },
-        { title: 'Complete Task', count: this.completedTask },
-        { title: 'Total Task', count: this.totalTask }
+        { taskStatus : 'pending',  title: 'Pending Task', count: this.pendingTask },
+        { taskStatus : 'complete',  title: 'Complete Task', count: this.completedTask },
+        { taskStatus : 'all',  title: 'Total Task', count: this.totalTask }
       ];
+    }
+
+    getTaskByStatus(taskStatus:string){
+
+        if(taskStatus==='pending'){
+           this.status = 0;
+        }
+      else if(taskStatus==='complete'){
+        this.status=1;
+      }
+      else
+      {
+        this.status=2;
+      }
+
+     
+        this.router.navigate(['/task', this.username], {
+          queryParams: { status: this.status},
+        });
     }
   }
   

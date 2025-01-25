@@ -7,10 +7,12 @@
   
   <div class="dashboard-container">
     <div class="dashboard-box" *ngFor="let item of dashboardCounts">
+     <div (click)="getTaskByStatus(item.taskStatus)"> 
       <h3>{{ item.title }}</h3>
       <p>{{ item.count }}</p>
     </div>
-  </div>
+    </div>
+  <!-- </div> -->
 <!-- <div class="d-flex">
     <div class="sidebar bg-dark text-white vh-100 p-3" style="width: 250px;">
       <h4 class="text-center">Menu</h4>

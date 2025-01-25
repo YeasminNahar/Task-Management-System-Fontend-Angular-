@@ -1,4 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { IndividualConfig } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -9,13 +10,17 @@ import { CommonService, toastPayload } from 'src/app/services/common.service';
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
+
+
 export class TaskComponent {
 
+  username=localStorage.getItem('user');
   // Flags to toggle between list and new task views
   isList: boolean = true;
   isNew: boolean = true;
   toast!: toastPayload;
-
+  status:any=0;
+  
   // Pagination properties
   pageIndex: number = 0;
   pageSize: number = 10;
@@ -52,10 +57,20 @@ export class TaskComponent {
   constructor(
     private cs: CommonService,
     private httpClient: HttpClient,
-    public authService: AuthService
+    public authService: AuthService,
+    private activeRoute: ActivatedRoute,
   ) {
-    this.get();
-    this.getTaskCategories();
+
+    this.activeRoute.params.subscribe(params => {
+      this.username = params['username'];
+    });
+
+    this.activeRoute.queryParams.subscribe(queryParams => {
+      this.status = queryParams['status'];
+     });
+
+     this.get();
+     this.getTaskCategories();
   }
 
 
@@ -72,7 +87,7 @@ export class TaskComponent {
     };
 
     // this.httpClient.get(this.authService.baseURL + '/api/Task', { headers: oHttpHeaders, params: params })
-    this.httpClient.get(this.authService.baseURL + '/api/Task/GetTask', { headers: oHttpHeaders })
+    this.httpClient.get(this.authService.baseURL + '/api/Task/GetTask?username='+this.username + '&status=' + this.status, { headers: oHttpHeaders })
     .subscribe((res: any) => {
       console.log('API Response:', res); // Check if taskId is present and correctly formatted
       if (res) {
@@ -84,6 +99,8 @@ export class TaskComponent {
       }
     });
   }
+
+
 
   // Fetch Task Categories for the dropdown
   getTaskCategories(): void {

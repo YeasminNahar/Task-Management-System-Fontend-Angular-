@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'file-attach', component: FileAttachComponent },
   { path: 'calendar-view', component: CalendarViewComponent },
   { path: 'department', component: DepartmentComponent },
-  
+  { path: 'task/:username', component: TaskComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate:[authGuard] }
 ];
 

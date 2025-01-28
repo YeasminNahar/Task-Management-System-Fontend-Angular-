@@ -16,11 +16,9 @@ export class TaskassignComponent {
   rowCount: number = 0;
   listPageSize = [5, 10, 20];
   pager = { pages: [], totalPages: 0 };
-
   listTaskAssign: any[] = [];
   listTasks: any[] = [];
   listMembers: any[] = [];
-
   TaskAssign = {
     TaskAssignId: 0,
     TaskId: 0,
@@ -43,7 +41,6 @@ export class TaskassignComponent {
     this.getTasks();
     this.getMembers();
   }
-
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Token': this.authService.UserInfo?.Token || ''

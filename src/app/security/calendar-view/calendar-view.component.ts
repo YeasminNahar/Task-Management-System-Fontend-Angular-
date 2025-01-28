@@ -10,6 +10,8 @@ import { CommonService, toastPayload } from 'src/app/services/common.service';
   styleUrls: ['./calendar-view.component.css']
 })
 export class CalendarViewComponent implements OnInit {
+  
+  
   months = [
     { name: 'January', days: 31 },
     { name: 'February', days: 28 }, // Adjust for leap year if needed

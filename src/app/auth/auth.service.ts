@@ -9,6 +9,7 @@ export class AuthService {
   UserInfo:{
     UserName:string,
     RoleId:string,
+    RoleName:string,
     IsLogIn:boolean
     UserID:number,
     Token:string,
@@ -40,6 +41,7 @@ export class AuthService {
   } = {
     UserName:'',
     RoleId:'',
+    RoleName:'',
     IsLogIn:false,
     UserID:0,
     Token:'',
@@ -114,7 +116,8 @@ export class AuthService {
       this.UserInfo.IsLogIn = isLogIn;
       this.UserInfo.UserName = userInfo.userName;
       this.UserInfo.RoleId = userInfo.roleId;
-      this.UserInfo.Token = userInfo.passWord;
+      this.UserInfo.RoleName = userInfo.roleName;
+      this.UserInfo.Token = userInfo.token;
       this.UserInfo.UserID = userInfo.userId;
       localStorage.setItem('user',userInfo.userName)
       //this.UserInfo.Permissions = userInfo.P)
@@ -137,6 +140,7 @@ export class AuthService {
       localStorage.setItem('uName',JSON.stringify(this.UserInfo.UserName));
       localStorage.setItem('UserInfo',JSON.stringify(this.UserInfo));
       localStorage.setItem('User',this.UserInfo.UserName);
+      localStorage.setItem('UserRole',this.UserInfo.RoleName);
       console.log(this.UserInfo);
     } else {
       this.logout();
@@ -153,6 +157,7 @@ export class AuthService {
   reset() {
     this.UserInfo.IsLogIn = false;
     this.UserInfo.UserName = '';
+    this.UserInfo.RoleName = '';
     this.UserInfo.Token = '';
     this.UserInfo.UserID = 0;
     this.UserInfo.RedirectURL = '/login';
@@ -160,6 +165,10 @@ export class AuthService {
     //this.UserInfo.Menu = this.resetMenu();
     //this.UserInfo.ModuleMenus = [],
     //this.UserInfo.Permissions = []
+  }
+  getUserRole(): string {
+    debugger
+    return this.UserInfo.RoleId; // Assuming the RoleId is stored in UserInfo
   }
 
 }

@@ -20,7 +20,9 @@ export class TaskComponent {
   isNew: boolean = true;
   toast!: toastPayload;
   status:any=0;
-  
+  userRole: string = '';
+  adminRoleId: string = '3F8FFDB7-3EFB-4FDF-9504-8452548F2EE7'; // Admin Role GUID
+  userRoleId: string = 'USER_ROLE_GUID'; // Add your User Role GUID here if needed
   // Pagination properties
   pageIndex: number = 0;
   pageSize: number = 10;
@@ -53,6 +55,12 @@ export class TaskComponent {
       isActive: true
     };
 
+    ngOnInit(): void {
+      this.userRole = this.authService.UserInfo.RoleName;
+
+    }
+      
+    
   // Constructor with necessary service injections
   constructor(
     private cs: CommonService,
@@ -72,6 +80,8 @@ export class TaskComponent {
      this.get();
      this.getTaskCategories();
   }
+
+
 
 
   // Fetch all tasks with pagination
@@ -246,10 +256,14 @@ export class TaskComponent {
 
   }
 
+
+
+
   // Confirm task deletion
   removeConfirm(task: { taskId: number, description: string }): void {
     this.Task.TaskId = task.taskId;
     this.Task.description = task.description;
+    this.Task.deadLine = 'delete';
   }
 
   // Remove a task
@@ -279,6 +293,45 @@ export class TaskComponent {
         console.error('Failed to delete task:', err);
         console.log('Error Details:', JSON.stringify(err, null, 2));
         this.showMessage('error', `Failed to remove task: ${err.error?.message || err.message || 'Unknown error.'}`);
+      }
+    });
+  }
+  
+   // Confirm task deletion
+   completeConfirm(task: { taskId: number, description: string }): void {
+    this.Task.TaskId = task.taskId;
+    this.Task.description = task.description;
+    this.Task.deadLine = 'complete';
+
+  }
+
+  // Remove a task
+  
+  complete(task: { TaskId: number, description: string }): void {
+    if (!task.TaskId) {
+      console.error('TaskId is undefined!');
+      return;
+    }
+  
+    const oHttpHeaders = new HttpHeaders({
+      'Token': this.authService.UserInfo.Token
+    });
+  
+    this.httpClient.get(`${this.authService.baseURL}/api/Task/CompleteTask?id=` + task.TaskId, {
+      headers: oHttpHeaders,
+      responseType: 'text'
+    }).subscribe({
+      next: (res: any) => {
+        console.log('Complete response:', res);
+        this.isList = true;
+        this.reset();
+        this.get();
+        this.showMessage('success', res || 'Task complete successfully.');
+      },
+      error: (err) => {
+        console.error('Failed to delete task:', err);
+        console.log('Error Details:', JSON.stringify(err, null, 2));
+        this.showMessage('error', `Failed to complete task: ${err.error?.message || err.message || 'Unknown error.'}`);
       }
     });
   }

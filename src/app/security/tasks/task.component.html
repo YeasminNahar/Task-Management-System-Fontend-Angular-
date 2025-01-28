@@ -5,11 +5,21 @@
   class="btn btn-outline-secondary mb-2" 
   (click)="isList = true; reset()"> Task List</a>
 
-<a 
+<!-- <a 
   href="javascript:void(0)" 
   *ngIf="isList" 
   class="btn btn-outline-primary mb-2" 
-  (click)="isList = false; reset()"> Add New Task</a>
+  (click)="isList = false; reset()"> Add New Task</a> -->
+  <a 
+  href="javascript:void(0)" 
+  *ngIf="isList && userRole == 'admin'" 
+  class="btn btn-outline-primary mb-2" 
+  (click)="isList = false; reset()"> 
+    Add New Task
+</a>
+
+
+
 
 <div *ngIf="isList">
     <div class="row">
@@ -43,8 +53,18 @@
                 <td>{{item.deadLine | date:'shortDate'}}</td>
                 <td>{{item.taskCategory}}</td>
                 <td>
-                    <button class="btn btn-sm btn-outline-primary" (click)="edit(item)">Edit</button>
-                    <button class="btn btn-sm btn-outline-primary" (click)="removeConfirm(item)" data-bs-toggle="modal" data-bs-target="#confirmModal">Delete</button>
+                    
+                    <button
+                    class="btn btn-sm btn-outline-primary"
+                    *ngIf="isList && userRole == 'Admin' && Task.isActive==false" 
+                    (click)="edit(item)">
+                    Edit
+                  </button>
+                    <button class="btn btn-sm btn-outline-primary"  *ngIf="isList && userRole == 'Admin'  && Task.isActive==false"
+                    (click)="removeConfirm(item)" data-bs-toggle="modal" data-bs-target="#confirmModal">Delete</button>
+                    <button class="btn btn-sm btn-outline-primary"  *ngIf="userRole == 'Member' &&  Task.isActive==false"
+                    (click)="completeConfirm(item)" data-bs-toggle="modal" data-bs-target="#confirmModal">Complete</button>
+                    <span *ngIf="Task.isActive==true">This Task Is Complete</span>
                 </td>
             </tr>
         </tbody>
@@ -116,7 +136,7 @@
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-danger" id="confirmModalLabel">Confirm Deletion</h5>
+        <h5 class="modal-title text-danger" id="confirmModalLabel">Confirmation</h5>
         <button 
           type="button" 
           class="btn-close" 
@@ -124,7 +144,7 @@
           aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to delete <strong>{{ Task.description }}</strong>?</p>
+        <p>Are you sure you want to {{ Task.deadLine }} <strong>{{ Task.description }}</strong>?</p>
       </div>
       <div class="modal-footer">
         <button 
@@ -133,10 +153,16 @@
           data-bs-dismiss="modal" 
           (click)="reset()">Cancel</button>
         <button 
-          type="button" 
+          type="button" *ngIf="isList && userRole == 'Admin'"
           class="btn btn-outline-danger" 
           data-bs-dismiss="modal" 
           (click)="remove(Task)">Delete</button>
+
+          <button 
+          type="button" *ngIf="isList && userRole == 'Member'"
+          class="btn btn-outline-danger" 
+          data-bs-dismiss="modal" 
+          (click)="complete(Task)">Complete</button>
       </div>
     </div>
   </div>

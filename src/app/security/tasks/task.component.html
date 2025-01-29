@@ -12,15 +12,11 @@
   (click)="isList = false; reset()"> Add New Task</a> -->
   <a 
   href="javascript:void(0)" 
-  *ngIf="isList && userRole == 'admin'" 
+  *ngIf="isList && userRole == 'Admin' && Task.isActive==true" 
   class="btn btn-outline-primary mb-2" 
   (click)="isList = false; reset()"> 
     Add New Task
 </a>
-
-
-
-
 <div *ngIf="isList">
     <div class="row">
         <div class="col-lg-4">
@@ -64,7 +60,8 @@
                     (click)="removeConfirm(item)" data-bs-toggle="modal" data-bs-target="#confirmModal">Delete</button>
                     <button class="btn btn-sm btn-outline-primary"  *ngIf="userRole == 'Member' &&  Task.isActive==false"
                     (click)="completeConfirm(item)" data-bs-toggle="modal" data-bs-target="#confirmModal">Complete</button>
-                    <span *ngIf="Task.isActive==true">This Task Is Complete</span>
+                    <span *ngIf="Task.isActive==true">This Task Is Complete</span> 
+                    
                 </td>
             </tr>
         </tbody>
@@ -109,8 +106,6 @@
         </div>
 
         <div class="col-md-6 d-none">
-
-        
             <input type="hidden" id="TaskId" [(ngModel)]="Task.TaskId" class="form-control" />
             <input type="hidden" id="isActive" [(ngModel)]="Task.isActive" class="form-control" />
             <input type="hidden" id="createBy" [(ngModel)]="Task.createBy" class="form-control" />
@@ -120,7 +115,7 @@
         </div>
 
         <div class="col-md-12 mt-5">
-            <button type="button" class="btn btn-secondary" *ngIf="Task.TaskId > 0" (click)="update()">Update</button>
+            <button type="button" class="btn btn-secondary me-2" *ngIf="Task.TaskId > 0" (click)="update()">Update</button>
             <button type="button" class="btn btn-primary" *ngIf="Task.TaskId == 0" (click)="add()">Add</button>
         </div>
     </div>

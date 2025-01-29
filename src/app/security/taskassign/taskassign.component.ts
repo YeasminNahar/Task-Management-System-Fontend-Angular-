@@ -10,10 +10,12 @@ import { CommonService, toastPayload } from 'src/app/services/common.service';
   styleUrls: ['./taskassign.component.css']
 })
 export class TaskassignComponent {
+  username=localStorage.getItem('user');
   isList: boolean = true; // Toggle between listing and form
   pageIndex: number = 0;
   pageSize: number = 10;
   rowCount: number = 0;
+  status:any=0;
   listPageSize = [5, 10, 20];
   pager = { pages: [], totalPages: 0 };
   listTaskAssign: any[] = [];

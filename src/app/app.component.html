@@ -105,40 +105,35 @@
     {{ notificationsCount }}
     <span class="visually-hidden">unread notifications</span>
   </span>
-</button>
+    </button>
 
   <!-- Notification List -->
   <div *ngIf="showNotificationList" class="notification-dropdown">
     <div class="notification-dropdown-header">
       Notifications
     </div>
-    <ul class="list-group">
+    <ul class="list-group" >
       <li *ngFor="let notification of notifications" class="list-group-item">
         <i class="fa fa-envelope"></i> {{ notification }}
+        
       </li>
+      <li>One new task assign</li>
+      <li >One new task assign</li>
+      <li>Taskdeadline</li>
     </ul>
   </div>
-  <!-- <button
-  class="btn btn-primary"
-  (click)="assignTaskNotification('New Task Name')"
->
-  Assign Task
-</button> -->
-  </div>
-        
+  </div>  
       </form>
     </div>
   </div>
 </nav>
 <div class="row">
   <div class="col-md-2" *ngIf="authService.UserInfo.UserName">
-
     <div class="sidebar bg-dark text-white vh-100" *ngIf="authService.UserInfo.RoleId=== '3F8FFDB7-3EFB-4FDF-9504-8452548F2EE7'">
    <li style="list-style: none;">
     <h4 class="text-center"> <a class="nav-link text-white" routerLink="/dashboard"><i class="fa fa-bar-chart"></i> Dashboard</a></h4>
     <ul class="nav flex-column">
       <li class="nav-item">
-       
       </li>
       <li class="nav-item">
         <a class="nav-link text-white" routerLink="/task"><i class="fa fa-tasks"></i> Tasks</a>
@@ -157,15 +152,12 @@
         <a class="nav-link text-white" routerLink="/file-attach">
           <i class="fa fa-file"></i> File Attached
         </a>
-      </li>
-      
       <li class="nav-item">
         <a class="nav-link text-white" routerLink="/settings"><i class="fa fa-cog"></i> Settings</a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-white" routerLink="/reports"><i class="fa fa-cog"></i> Reports</a>
       </li>
-     
       <li class="nav-item">
         <a class="nav-link text-white" routerLink="/calendar-view"><i class="fa fa-cog"></i> CalenderView</a>
       </li>

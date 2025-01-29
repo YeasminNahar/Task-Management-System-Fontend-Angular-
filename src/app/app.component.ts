@@ -13,12 +13,16 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent {
 
   title = '';
-  notificationsCount = 0; // Initially, no notifications
+  notificationsCount = 5; // Initially, no notifications
   showNotificationList = false; // To toggle notification visibility
   notifications: string[] = []; // Empty list of notifications initially
-
+  isList: boolean = true;
+  userRole: string = '';
+  pendingTask: number = 0;
+  status : number = 10;
   showNotifications() {
     this.showNotificationList = !this.showNotificationList; // Toggle visibility
+    
   }
 
   // Call this method when a task is assigned to add a notification
@@ -76,4 +80,5 @@ export class AppComponent {
       ModuleId:1
     }
   ];
+  
 }

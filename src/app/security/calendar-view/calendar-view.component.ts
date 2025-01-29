@@ -30,7 +30,7 @@ export class CalendarViewComponent implements OnInit {
   daysOfWeek: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   currentMonthIndex: number = new Date().getMonth(); // Default to the current month
   currentYear: number = new Date().getFullYear();
-  tasks = [
+  task = [
     { date: new Date(2025, 0, 5), details: 'Complete design review ' },
     { date: new Date(2025, 1, 14), details: 'PDF generate Task' },
     { date: new Date(2025, 5, 20), details: 'Team meeting' },
@@ -69,7 +69,7 @@ export class CalendarViewComponent implements OnInit {
   }
 
   isTaskAssigned(day: number): boolean {
-    return this.tasks.some(
+    return this.task.some(
       task =>
         task.date.getDate() === day &&
         task.date.getMonth() === this.currentMonthIndex &&
@@ -78,7 +78,7 @@ export class CalendarViewComponent implements OnInit {
   }
 
   showTaskDetails(day: number): void {
-    const task = this.tasks.find(
+    const task = this.task.find(
       t => t.date.getDate() === day && t.date.getMonth() === this.currentMonthIndex
     );
     this.selectedTask = task ? task.details : null;

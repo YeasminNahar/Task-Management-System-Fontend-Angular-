@@ -49,19 +49,18 @@ pendingTask: number = 0;
 completedTask: number = 0; // Default page size
 totalTask: number = 0;
 status : number = 10;
-
+userRole: string = '';
 
     dashboardCounts: { taskStatus: string; title: string; count: number }[] = [];
   
     constructor(
-      private router:Router,
+    private router:Router,
      public authService:AuthService,
      private httpClient:HttpClient
     ) {}
   
     ngOnInit() {
       this.updateCounts();
-      // Dynamic data (you can replace this with an API call)
       
     }
   
@@ -96,9 +95,7 @@ status : number = 10;
         { taskStatus : 'all',  title: 'Total Task', count: this.totalTask }
       ];
     }
-
     getTaskByStatus(taskStatus:string){
-
         if(taskStatus==='pending'){
            this.status = 0;
         }
@@ -109,8 +106,6 @@ status : number = 10;
       {
         this.status=2;
       }
-
-     
         this.router.navigate(['/task', this.username], {
           queryParams: { status: this.status},
         });

@@ -97,6 +97,7 @@ export class TaskComponent {
     };
 
     // this.httpClient.get(this.authService.baseURL + '/api/Task', { headers: oHttpHeaders, params: params })
+    // this.httpClient.get(this.authService.baseURL + '/api/Task/GetTask?username='+this.username + '&status=' + this.status, { headers: oHttpHeaders })
     this.httpClient.get(this.authService.baseURL + '/api/Task/GetTask?username='+this.username + '&status=' + this.status, { headers: oHttpHeaders })
     .subscribe((res: any) => {
       console.log('API Response:', res); // Check if taskId is present and correctly formatted

@@ -34,7 +34,7 @@
               </span>
             </td>
             <td>
-              <button class="btn btn-warning btn-sm" (click)="edit(item)">Edit</button>
+              <button class="btn btn-warning btn-sm me-2" (click)="edit(item)">Edit</button>
               <button class="btn btn-danger btn-sm" (click)="remove(item.taskAssignId)">Delete</button>
             </td>
           </tr>
@@ -83,7 +83,7 @@
   
         <div class="d-flex justify-content-between">
           <button type="button" class="btn btn-secondary" (click)="isList = true">Cancel</button>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="btn btn-primary" >
             {{ TaskAssign.TaskAssignId ? 'Update' : 'Add' }} Assignment
           </button>
         </div>

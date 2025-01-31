@@ -14,7 +14,7 @@ import { CommonService, toastPayload } from 'src/app/services/common.service';
 
 export class TaskComponent {
 
-  username=localStorage.getItem('user');
+  username=localStorage.getItem('User');
   // Flags to toggle between list and new task views
   isList: boolean = true;
   isNew: boolean = true;
@@ -39,6 +39,7 @@ export class TaskComponent {
     deadLine: string,
     taskCategoryID: number,
     isActive: boolean,
+    taskStatus: number,
     updateBy: any,
     createBy: any,
     createDate: any,
@@ -48,6 +49,7 @@ export class TaskComponent {
       description: "",
       deadLine: "",
       taskCategoryID: 0,
+      taskStatus : 0,
       updateBy: '',
       createBy: '',
       createDate: '',
@@ -70,11 +72,21 @@ export class TaskComponent {
   ) {
 
     this.activeRoute.params.subscribe(params => {
-      this.username = params['username'];
+      if(params['username']==undefined){
+        this.username = localStorage.getItem('User');
+      }else{
+        this.username = params['username'];
+      }
+
     });
 
     this.activeRoute.queryParams.subscribe(queryParams => {
-      this.status = queryParams['status'];
+      if(queryParams['status']==undefined){
+        this.status = 3;
+      }else{
+        this.status = queryParams['status'];
+      }
+
      });
 
      this.get();
@@ -87,6 +99,7 @@ export class TaskComponent {
   // Fetch all tasks with pagination
   get(): void {
     // debugger
+
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
@@ -95,10 +108,10 @@ export class TaskComponent {
       pageIndex: this.pageIndex.toString(),
       pageSize: this.pageSize.toString()
     };
-
+    console.log()
     // this.httpClient.get(this.authService.baseURL + '/api/Task', { headers: oHttpHeaders, params: params })
     // this.httpClient.get(this.authService.baseURL + '/api/Task/GetTask?username='+this.username + '&status=' + this.status, { headers: oHttpHeaders })
-    this.httpClient.get(this.authService.baseURL + '/api/Task/GetTask?username='+this.username + '&status=' + this.status, { headers: oHttpHeaders })
+    this.httpClient.get(this.authService.baseURL + '/api/Task/GetTasks?username='+this.username + '&status=' + this.status, { headers: oHttpHeaders })
     .subscribe((res: any) => {
       console.log('API Response:', res); // Check if taskId is present and correctly formatted
       if (res) {
@@ -139,6 +152,7 @@ export class TaskComponent {
       deadLine: item.deadLine ? item.deadLine.split('T')[0] : '', // Ensure "yyyy-MM-dd" format
       taskCategoryID: item.taskCategoryId, // Use taskCategoryId from the response
       isActive: item.isActive,
+      taskStatus: item.taskStatus,
       updateBy: item.updateBy,
       createBy: item.createBy,
       createDate: item.createDate,
@@ -158,6 +172,7 @@ export class TaskComponent {
       description: "",
       deadLine: "",
       taskCategoryID: 0,
+      taskStatus: 0,
       updateBy: '',
       createBy: '',
       createDate: '',
@@ -240,7 +255,7 @@ export class TaskComponent {
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
-    alert(this.Task.TaskId)
+    // alert(this.Task.TaskId)
 
     this.httpClient.put(this.authService.baseURL + '/api/Task/PutTask/' + this.Task.TaskId, this.Task, { headers: oHttpHeaders })
       .subscribe({
@@ -373,7 +388,19 @@ export class TaskComponent {
     this.pageIndex = 0; // Reset to first page
     this.get();
   }
-
+  //  printReport() {
+  //  const printContent = document.getElementById('reportTable')?.innerHTML;
+  //  const myWindow = window.open('', '', 'width=800,height=600');
+    
+  //   myWindow?.document.write('<html><head><title>Task Report</title></head><body>');
+  //   myWindow?.document.write('<h2>Task Management Report</h2>');
+  //  myWindow?.document.write(printContent || '');
+  //  myWindow?.document.write('</body></html>');
+    
+  //  myWindow?.document.close();
+  // myWindow?.print();
+  //  }
+  
   // Search method that triggers on page size change
   search(): void {
     this.pageIndex = 0; // Reset to first page when page size changes

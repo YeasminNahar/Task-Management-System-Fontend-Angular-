@@ -13,7 +13,7 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent {
 
   title = '';
-  notificationsCount = 5; // Initially, no notifications
+  notificationsCount = 1; 
   showNotificationList = false; // To toggle notification visibility
   notifications: string[] = []; // Empty list of notifications initially
   isList: boolean = true;
@@ -24,14 +24,11 @@ export class AppComponent {
     this.showNotificationList = !this.showNotificationList; // Toggle visibility
     
   }
-
-  // Call this method when a task is assigned to add a notification
   assignTaskNotification(taskName: string) {
     this.notifications.push(`A new task "${taskName}" has been assigned to you.`);
     this.notificationsCount = this.notifications.length; // Update the count
   }
   // notificationsCount = 5; // Example: Replace with dynamic count
-
   // showNotifications() {
   //   console.log("Display notifications dropdown or modal");
   //   // Add logic to handle notification click

@@ -14,7 +14,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let week of generateCalendar()">
-          <td *ngFor="let day of week" (click)="day && isTaskAssigned(day) ? showTaskDetails(day) : null" [class.task-date]="day && isTaskAssigned(day)">
+          <td *ngFor="let day of week" (click)="day ? showTaskDetails(day) : null"   [class.deadline]="day && isTaskDeadline(day)"
+
+              [class.task-day]="day && isTaskAssigned(day)">
             {{ day || '' }}
           </td>
         </tr>
@@ -22,10 +24,12 @@
     </table>
   
     <!-- Task Details -->
-    <div class="task-details" *ngIf="selectedTask">
-      <h3>Task Details</h3>
-      <p>{{ selectedTask }}</p>
-      <button (click)="selectedTask = null">Close</button>
-    </div>
-  </div>
+    <div *ngIf="selectedTasks.length > 0">
+  <h3>Tasks for {{ selectedTasks[0]?.deadLine | date:'longDate' }}</h3>
+  <ul>
+    <li *ngFor="let task of selectedTasks">
+       <strong>{{ task.description }}</strong> - Assigned to {{ task.memberName }}
+    </li>
+  </ul>
+</div>
   

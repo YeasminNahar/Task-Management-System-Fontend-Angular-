@@ -45,6 +45,7 @@ import { Router } from '@angular/router';
   export class DashboardComponent  {
 //api/Task/GetTaskCountByUsername
 username=localStorage.getItem('user');
+newTask: number = 0;
 pendingTask: number = 0;
 completedTask: number = 0; // Default page size
 totalTask: number = 0;
@@ -61,9 +62,10 @@ userRole: string = '';
   
     ngOnInit() {
       this.updateCounts();
-      
+      this.userRole = this.authService.UserInfo.RoleName;
     }
-  
+    
+      
     updateCounts() {
       const hd=new HttpHeaders({
         Token: this.authService.UserInfo.Token
@@ -74,10 +76,17 @@ userRole: string = '';
         next: (response) => {
             if (response) {
               console.log(response)
+                this.newTask = response.newTask ;              
                 this.pendingTask = response.pendingTask;
                 this.completedTask = response.completeTask;
-                this.totalTask = response.totalTask;
-
+                debugger
+                console.log('User Role:', this.userRole); 
+                if (this.userRole === 'Member') {
+                  this.totalTask = this.pendingTask + this.completedTask;
+                } else {
+                  this.totalTask = response.totalTask;
+                }
+                console.log('Total Task:', this.totalTask);
                 this.dashboard();
             }
         },
@@ -90,21 +99,27 @@ userRole: string = '';
 
     dashboard(){
       this.dashboardCounts = [
+        { taskStatus : 'new',  title: 'New Task', count: this.newTask },
         { taskStatus : 'pending',  title: 'Pending Task', count: this.pendingTask },
         { taskStatus : 'complete',  title: 'Complete Task', count: this.completedTask },
         { taskStatus : 'all',  title: 'Total Task', count: this.totalTask }
       ];
     }
     getTaskByStatus(taskStatus:string){
-        if(taskStatus==='pending'){
+      debugger
+        if(taskStatus==='new'){
            this.status = 0;
         }
+        else if(taskStatus==='pending'){
+          this.status=1;
+        }
       else if(taskStatus==='complete'){
-        this.status=1;
+        this.status=2;
       }
       else
       {
-        this.status=2;
+        
+        this.status=3;
       }
         this.router.navigate(['/task', this.username], {
           queryParams: { status: this.status},

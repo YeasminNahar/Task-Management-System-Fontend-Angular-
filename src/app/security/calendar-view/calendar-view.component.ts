@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { IndividualConfig } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CommonService, toastPayload } from 'src/app/services/common.service';
+import { IndividualConfig } from 'ngx-toastr';
 @Component({
   selector: 'app-calendar-view',
   templateUrl: './calendar-view.component.html',
   styleUrls: ['./calendar-view.component.css']
 })
 export class CalendarViewComponent implements OnInit {
-  
-  
+  // username = localStorage.getItem('user');
+  listTaskAssign: any[] = [];
+  calendarData: { [date: string]: any[] } = {};
+  currentMonthIndex: number = new Date().getMonth();
+  currentYear: number = new Date().getFullYear();
+  selectedTasks: any[] = [];
+  daysOfWeek: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   months = [
     { name: 'January', days: 31 },
     { name: 'February', days: 28 }, // Adjust for leap year if needed
@@ -27,29 +31,49 @@ export class CalendarViewComponent implements OnInit {
     { name: 'December', days: 31 },
   ];
 
-  daysOfWeek: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  currentMonthIndex: number = new Date().getMonth(); // Default to the current month
-  currentYear: number = new Date().getFullYear();
-  task = [
-    { date: new Date(2025, 0, 5), details: 'Complete design review ' },
-    { date: new Date(2025, 1, 14), details: 'PDF generate Task' },
-    { date: new Date(2025, 5, 20), details: 'Team meeting' },
-    { date: new Date(2025, 10, 25), details: 'Christmas Celebration' },
-  ];
-
-  selectedTask: string | null = null;
+  toast!: toastPayload;
+  constructor(
+    private httpClient: HttpClient,
+    public authService: AuthService,
+    private cs: CommonService
+  ) {}
 
   ngOnInit(): void {
-    // Adjust February for leap year if necessary
-    if ((this.currentYear % 4 === 0 && this.currentYear % 100 !== 0) || this.currentYear % 400 === 0) {
-      this.months[1].days = 29;
-    }
+    this.getTaskAssignments();
+  }
+
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Token': this.authService.UserInfo?.Token || ''
+    });
+  }
+
+  getTaskAssignments(): void {
+    this.httpClient.get(this.authService.baseURL + '/api/TaskAssign/GetTaskAssignsWithDetails', {
+      headers: this.getHeaders()
+    }).subscribe({
+      next: (res: any) => {
+        this.listTaskAssign = res || [];
+        this.organizeTasksByDate();
+      },
+      error: () => this.showMessage('warning', 'Failed to fetch task assignments.')
+    });
+  }
+
+  organizeTasksByDate(): void {
+    this.calendarData = {};
+    this.listTaskAssign.forEach(task => {
+      let taskDate = new Date(task.deadLine).toISOString().split('T')[0];
+      if (!this.calendarData[taskDate]) {
+        this.calendarData[taskDate] = [];
+      }
+      this.calendarData[taskDate].push(task);
+    });
   }
 
   generateCalendar(): (number | null)[][] {
     const firstDayOfMonth = new Date(this.currentYear, this.currentMonthIndex, 1).getDay();
-    const daysInMonth = this.months[this.currentMonthIndex].days;
-
+    const daysInMonth = new Date(this.currentYear, this.currentMonthIndex + 1, 0).getDate();
     const weeks: (number | null)[][] = [];
     let week: (number | null)[] = new Array(firstDayOfMonth).fill(null);
 
@@ -69,19 +93,25 @@ export class CalendarViewComponent implements OnInit {
   }
 
   isTaskAssigned(day: number): boolean {
-    return this.task.some(
-      task =>
-        task.date.getDate() === day &&
-        task.date.getMonth() === this.currentMonthIndex &&
-        task.date.getFullYear() === this.currentYear
+    const dateKey = new Date(this.currentYear, this.currentMonthIndex, day).toISOString().split('T')[0];
+    return this.calendarData.hasOwnProperty(dateKey);
+  }
+  isTaskDeadline(day: number): boolean {
+    return this.listTaskAssign.some(
+      task => {
+        const taskDate = new Date(task.deadLine);
+        return (
+          taskDate.getDate() === day &&
+          taskDate.getMonth() === this.currentMonthIndex &&
+          taskDate.getFullYear() === this.currentYear
+        );
+      }
     );
   }
-
+  
   showTaskDetails(day: number): void {
-    const task = this.task.find(
-      t => t.date.getDate() === day && t.date.getMonth() === this.currentMonthIndex
-    );
-    this.selectedTask = task ? task.details : null;
+    const dateKey = new Date(this.currentYear, this.currentMonthIndex, day).toISOString().split('T')[0];
+    this.selectedTasks = this.calendarData[dateKey] || [];
   }
 
   changeMonth(offset: number): void {
@@ -94,4 +124,14 @@ export class CalendarViewComponent implements OnInit {
       this.currentYear++;
     }
   }
+
+   showMessage(type: string, message: string): void {
+      this.toast = {
+        message,
+        title: type.toUpperCase(),
+        type,
+        ic: { timeOut: 2500, closeButton: true } as IndividualConfig
+      };
+      this.cs.showToast(this.toast);
+    }
 }

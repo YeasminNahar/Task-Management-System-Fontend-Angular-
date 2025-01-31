@@ -5,7 +5,9 @@
     <div *ngIf="isList">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <button class="btn btn-primary" (click)="isList = false; reset()">Add New Task Assignment</button>
+        <button class="alltaskbutton"(click)="openPopup()">AllTaskView</button>
         <div>
+          
           <label for="pageSize">Page Size:</label>
           <select id="pageSize" [(ngModel)]="pageSize" (change)="changePageSize()">
             <option *ngFor="let size of listPageSize" [value]="size">{{ size }}</option>
@@ -35,7 +37,9 @@
             </td>
             <td>
               <button class="btn btn-warning btn-sm me-2" (click)="edit(item)">Edit</button>
-              <button class="btn btn-danger btn-sm" (click)="remove(item.taskAssignId)">Delete</button>
+              <button class="btn btn-danger btn-sm me-2" (click)="remove(item.taskAssignId)">Delete</button>
+              <button class="btn btn-info btn-sm me-2" (click)="viewTask(item)" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">View</button>
+              
             </td>
           </tr>
         </tbody>
@@ -61,10 +65,10 @@
     <div *ngIf="!isList">
       <form (ngSubmit)="TaskAssign.TaskAssignId ? update() : add()">
         <div class="mb-3">
-          <label for="task" class="form-control">Task</label>
+          <label for="task" class="form-label">Task</label>
           <select id="task" class="form-select" [(ngModel)]="TaskAssign.TaskId" name="task" required>
             <option value="" >Select Task</option>
-            <option *ngFor="let task of listTasks" [value]="task.taskId">{{ task.name }}</option>
+            <option *ngFor="let task of listTasks" [value]="task.taskId">{{ task.description }}</option>
           </select>
         </div>
   
@@ -90,4 +94,51 @@
       </form>
     </div>
   </div>
-  
+  <div class="modal fade" id="taskDetailsModal" tabindex="-1" aria-labelledby="taskDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="taskDetailsModalLabel">Task Assignment Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Task Name:</strong>{{ selectedTaskAssign?.name }}{{ selectedTaskAssign.description }}</p>
+          <p><strong>Member Name:</strong> {{ selectedTaskAssign?.MemberId }}{{ selectedTaskAssign.memberName }}</p>
+          <p><strong>Deadline:</strong> {{ selectedTaskAssign?.deadline }}{{ selectedTaskAssign.deadline }}</p>
+          <p><strong>Status:</strong> 
+            <span [ngClass]="selectedTaskAssign?.isActive ? 'text-success' : 'text-danger'">
+              {{ selectedTaskAssign?.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- View Button -->
+
+
+<!-- Popup Modal -->
+<div *ngIf="showPopup" class="popup">
+  <div class="popup-content">
+    <button class="close-btn" (click)="closePopup()">Close</button>
+    <h2>Task Report</h2>
+    <table id="reportTable" border="1">
+      <tr>
+        <th>Task Name</th>
+        <th>Deadline</th>
+        <th>Member</th>
+        <th>Status</th>
+      </tr>
+      <tr *ngFor="let task of listTaskAssign">
+        <td>{{ task.name }}</td>
+        <td>{{ task.deadLine }}</td>
+        <td>{{ task.memberName }}</td>
+        <td>{{ task.isActive ? 'Active' : 'Inactive' }}</td>
+      </tr>
+    </table>
+    <button class="print-report-btn" (click)="printReport()">Print Report</button>
+  </div>
+</div>

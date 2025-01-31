@@ -71,8 +71,8 @@
               <a class="dropdown-item" routerLink="/category"><i class="fa fa-briefcase" aria-hidden="true"></i> Task Category</a>
             </li> -->
             <li>
-              <a class="dropdown-item" routerLink="/memberinvitation"><i class="fa fa-briefcase" aria-hidden="true"></i> MemberInvitation</a>
-            </li>
+              <!-- <a class="dropdown-item" routerLink="/memberinvitation"><i class="fa fa-briefcase" aria-hidden="true"></i> MemberInvitation</a>
+            </li> -->
            </ul>
         </li>
         <!-- <li class="nav-item dropdown" *ngFor="let item of authService.UserInfo.ModuleMenus">
@@ -115,11 +115,8 @@
     <ul class="list-group" >
       <li *ngFor="let notification of notifications" class="list-group-item">
         <i class="fa fa-envelope"></i> {{ notification }}
-        
       </li>
       <li>One new task assign</li>
-      <li >One new task assign</li>
-      <li>Taskdeadline</li>
     </ul>
   </div>
   </div>  
@@ -152,9 +149,7 @@
         <a class="nav-link text-white" routerLink="/file-attach">
           <i class="fa fa-file"></i> File Attached
         </a>
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/settings"><i class="fa fa-cog"></i> Settings</a>
-      </li>
+     
       <li class="nav-item">
         <a class="nav-link text-white" routerLink="/reports"><i class="fa fa-cog"></i> Reports</a>
       </li>

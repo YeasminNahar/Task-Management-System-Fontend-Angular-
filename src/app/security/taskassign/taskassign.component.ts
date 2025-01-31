@@ -10,6 +10,22 @@ import { CommonService, toastPayload } from 'src/app/services/common.service';
   styleUrls: ['./taskassign.component.css']
 })
 export class TaskassignComponent {
+  showPopup: boolean = false;
+  openPopup(): void {
+    this.showPopup = true;
+  }
+  closePopup(): void {
+    this.showPopup = false;
+  }
+  printReport(): void {
+    const printContents = document.getElementById('reportTable')?.outerHTML;
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents!;
+    window.print();
+    document.body.innerHTML = originalContents;
+  }
+
   username=localStorage.getItem('user');
   isList: boolean = true; // Toggle between listing and form
   pageIndex: number = 0;
@@ -25,6 +41,7 @@ export class TaskassignComponent {
     TaskAssignId: 0,
     TaskId: 0,
     MemberId: 0,
+    deadLine: '',
     isActive: true,
     updateBy: '',
     createBy: '',
@@ -49,16 +66,20 @@ export class TaskassignComponent {
     });
   }
 
-  
+selectedTaskAssign: any = {};
+viewTask(item: any) {
+  this.selectedTaskAssign = item;
+}
   get(): void {
     const params = { pageIndex: this.pageIndex.toString(), pageSize: this.pageSize.toString() };
+    
     this.httpClient.get(this.authService.baseURL + '/api/TaskAssign/GetTaskAssignsWithDetails', {
       headers: this.getHeaders(),
       params
     }).subscribe({
       next: (res: any) => {
         this.listTaskAssign = res || []; // Task Assign list
-        this.listTasks = res || []; // Task Assign list
+        //this.listTasks = res || []; // Task Assign list
         this.rowCount = res.totalCount || 0;
   
         // Ensure listTasks and listMembers are updated
@@ -66,7 +87,7 @@ export class TaskassignComponent {
         // this.getMembers();
   
         console.log(this.listTaskAssign, 'Task Assign List');
-        console.log(this.listTasks, 'Task  List');
+        //console.log(this.listTasks, 'Task  List');
         console.log('MemberList',this.listMembers)
         this.updatePager();
       },
@@ -74,14 +95,34 @@ export class TaskassignComponent {
     });
   }
   
-
   getTasks(): void {
-    
-    this.httpClient.get(this.authService.baseURL + '/api/Task/GetTask', { headers: this.getHeaders() }).subscribe({
-      next: (res: any) => this.listTasks = res || [],
-      error: () => this.showMessage('warning', 'Failed to fetch tasks.')
+    const params = { pageIndex: this.pageIndex.toString(), pageSize: this.pageSize.toString() };
+    this.httpClient.get(this.authService.baseURL + '/api/Task/GetTask', {
+      headers: this.getHeaders(),
+      params
+    }).subscribe({
+      next: (res: any) => {
+
+        this.listTasks = res || []; // Task list
+
+        console.log(this.listTasks, 'Task  List');
+
+        this.updatePager();
+      },
+      error: () => this.showMessage('warning', 'Failed to fetch task assignments. Please try again.')
     });
   }
+  
+  // getTasks(): void {
+    
+  //   this.httpClient.get(this.authService.baseURL + '/api/Task/GetTask', { headers: this.getHeaders() }).subscribe({
+ 
+  //     next: (res: any) => this.listTasks = res || [],
+  //     error: () => this.showMessage('warning', 'Failed to fetch tasks.')
+
+  //     console.log(res);
+  //   });
+  // }
 
   getMembers(): void {
     this.httpClient.get(this.authService.baseURL + '/api/Member/GetMember', { headers: this.getHeaders() }).subscribe({
@@ -89,7 +130,7 @@ export class TaskassignComponent {
       error: () => this.showMessage('warning', 'Failed to fetch members.')
     });
   }
-
+ 
   edit(item: any): void {
     console.log("Edit Item: ", item);
     this.TaskAssign = {
@@ -98,6 +139,7 @@ export class TaskassignComponent {
       MemberId: item.memberId || 0,
       isActive: item.isActive || false,
       updateBy: item.updateBy || '',
+      deadLine: item.deadLine || '',
       createBy: item.createBy || '',
       createDate: item.createDate || '',
       updateDate: item.updateDate || ''
@@ -113,6 +155,7 @@ export class TaskassignComponent {
       MemberId: 0,
       isActive: true,
       updateBy: '',
+      deadLine:'',
       createBy: '',
       createDate: '',
       updateDate: ''
@@ -220,6 +263,12 @@ export class TaskassignComponent {
   }
   
   
+  // removeConfirm(taskCategory: { taskCategoryId: number; name: string }): void {
+  //   this.TaskCategory.taskCategoryId = taskCategory.taskCategoryId;
+  //   this.TaskCategory.name = taskCategory.name;
+  // }
+
+
   
 
   validateForm(): boolean {
@@ -229,7 +278,19 @@ export class TaskassignComponent {
     }
     return true;
   }
-
+  
+  // printReport() {
+  //   const printContent = document.getElementById('reportTable')?.innerHTML;
+  //   const myWindow = window.open('', '', 'width=800,height=600');
+     
+  //    myWindow?.document.write('<html><head><title>Task Report</title></head><body>');
+  //    myWindow?.document.write('<h2>Task Management Report</h2>');
+  //   myWindow?.document.write(printContent || '');
+  //   myWindow?.document.write('</body></html>');
+     
+  //   myWindow?.document.close();
+  //  myWindow?.print();
+  //   }
   showMessage(type: string, message: string): void {
     this.toast = {
       message,
@@ -257,3 +318,4 @@ export class TaskassignComponent {
     this.get();
   }
 }
+  

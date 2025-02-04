@@ -58,7 +58,7 @@
                     
                     <button
                     class="btn btn-sm btn-outline-primary me-2"
-                    *ngIf="isList && userRole == 'Admin'" 
+                    *ngIf="isList && userRole == 'Admin' && (item.taskStatus==0 || item.taskStatus==1)"
                     (click)="edit(item)">
                     Edit
                   </button>
@@ -115,7 +115,7 @@
 
         <div class="col-md-6 d-none">
             <input type="hidden" id="TaskId" [(ngModel)]="Task.TaskId" class="form-control" />
-            <input type="hidden" id="TaskId" [(ngModel)]="Task.taskStatus" class="form-control" />
+            <input type="hidden" id="TaskId" [(ngModel)]="Task.TaskStatus" class="form-control" />
             <input type="hidden" id="isActive" [(ngModel)]="Task.isActive" class="form-control" />
             <input type="hidden" id="createBy" [(ngModel)]="Task.createBy" class="form-control" />
             <input type="hidden" id="createDate" [(ngModel)]="Task.createDate" class="form-control" />

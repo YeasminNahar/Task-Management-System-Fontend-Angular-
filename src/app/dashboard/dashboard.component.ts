@@ -61,6 +61,7 @@ userRole: string = '';
     ) {}
   
     ngOnInit() {
+      
       this.updateCounts();
       this.userRole = this.authService.UserInfo.RoleName;
     }
@@ -79,7 +80,6 @@ userRole: string = '';
                 this.newTask = response.newTask ;              
                 this.pendingTask = response.pendingTask;
                 this.completedTask = response.completeTask;
-                debugger
                 console.log('User Role:', this.userRole); 
                 if (this.userRole === 'Member') {
                   this.totalTask = this.pendingTask + this.completedTask;
@@ -98,12 +98,22 @@ userRole: string = '';
     }
 
     dashboard(){
-      this.dashboardCounts = [
-        { taskStatus : 'new',  title: 'New Task', count: this.newTask },
-        { taskStatus : 'pending',  title: 'Pending Task', count: this.pendingTask },
-        { taskStatus : 'complete',  title: 'Complete Task', count: this.completedTask },
-        { taskStatus : 'all',  title: 'Total Task', count: this.totalTask }
-      ];
+      
+      if(this.userRole == 'Admin'){
+        this.dashboardCounts = [
+          { taskStatus : 'new',  title: 'New Task', count: this.newTask },
+          { taskStatus : 'pending',  title: 'Pending Task', count: this.pendingTask },
+          { taskStatus : 'complete',  title: 'Complete Task', count: this.completedTask },
+          { taskStatus : 'all',  title: 'Total Task', count: this.totalTask }
+        ];
+      }else{
+        this.dashboardCounts = [
+          { taskStatus : 'pending',  title: 'Pending Task', count: this.pendingTask },
+          { taskStatus : 'complete',  title: 'Complete Task', count: this.completedTask },
+          { taskStatus : 'all',  title: 'Total Task', count: this.totalTask }
+        ];
+      }
+
     }
     getTaskByStatus(taskStatus:string){
       debugger

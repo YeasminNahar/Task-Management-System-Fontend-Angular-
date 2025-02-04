@@ -58,6 +58,7 @@ export class TaskassignComponent {
   ) {
     this.get();
     this.getTasks();
+    this.getTasks();
     this.getMembers();
   }
   private getHeaders(): HttpHeaders {

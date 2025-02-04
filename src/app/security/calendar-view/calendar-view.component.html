@@ -28,7 +28,7 @@
   <h3>Tasks for {{ selectedTasks[0]?.deadLine | date:'longDate' }}</h3>
   <ul>
     <li *ngFor="let task of selectedTasks">
-       <strong>{{ task.description }}</strong> - Assigned to {{ task.memberName }}
+       <strong>{{ task.name}}</strong> - Assigned to {{ task.memberName }}
     </li>
   </ul>
 </div>

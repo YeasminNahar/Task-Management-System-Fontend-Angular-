@@ -45,10 +45,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <h3 style="color: antiquewhite;">Task Management</h3>
+      <h3 style="color: rgb(255, 255, 255);">Task Management</h3>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a *ngIf="authService.UserInfo.IsLogIn" class="nav-link" aria-current="page" routerLink="/dashboard"><i class="fa fa-home"></i> Home</a>
+          <a *ngIf="authService.UserInfo.IsLogIn" class="nav-link" aria-current="page" routerLink="/dashboard"><i class="fa fa-home me-2"></i> Home</a>
         </li>
         <li class="nav-item">
           <a *ngIf="authService.UserInfo.IsLogIn" class="nav-link" aria-current="page" routerLink="/dashboard"><i class="fa fa-home"></i> About</a>
@@ -71,8 +71,6 @@
               <a class="dropdown-item" routerLink="/category"><i class="fa fa-briefcase" aria-hidden="true"></i> Task Category</a>
             </li> -->
             <li>
-              <!-- <a class="dropdown-item" routerLink="/memberinvitation"><i class="fa fa-briefcase" aria-hidden="true"></i> MemberInvitation</a>
-            </li> -->
            </ul>
         </li>
         <!-- <li class="nav-item dropdown" *ngFor="let item of authService.UserInfo.ModuleMenus">
@@ -92,23 +90,49 @@
         <button class="btn btn-sm btn-outline-success me-2" type="button" (click)="login()" *ngIf="!authService.UserInfo.IsLogIn">Login</button>
         <button class="btn btn-sm btn-outline-primary" [routerLink]="'/member-registration'" *ngIf="!authService.UserInfo.IsLogIn" type="button">Sign Up</button>
         <div *ngIf="authService.UserInfo.IsLogIn" class="position-relative ms-3">
-          <button
-  class="btn btn-light position-relative"
+          <!-- <button
+  class="btn btn-light position-relative"*ngFor="let item of dashboardCounts"
   type="button"
-  (click)="showNotifications()"
+  (click)="showNotifications(item.taskStatus)"
 >
   <i class="fa fa-bell"></i>
   <span
     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-    *ngIf="notificationsCount > 0"
+   
   >
-    {{ notificationsCount }}
+  {{ item.count }}
+    
     <span class="visually-hidden">unread notifications</span>
   </span>
-    </button>
+  
+    </button> -->
+   <!-- Notification Button -->
+<button
+class="btn btn-light position-relative"
+*ngFor="let item of dashboardCounts"
+type="button"
+(click)="toggleNotificationList()"
+>
+<i class="fa fa-bell" *ngIf="userRole == 'Member'"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+  {{ item.count }}
+  <span class="visually-hidden">unread notifications</span>
+</span>
+</button>
 
-  <!-- Notification List -->
-  <div *ngIf="showNotificationList" class="notification-dropdown">
+<!-- Notification List -->
+<div *ngIf="showNotificationList" class="notification-dropdown">
+<div class="notification-dropdown-header">
+  Notifications
+</div>
+<ul class="list-group">
+  <li *ngFor="let item of dashboardCounts" class="list-group-item" (click)="showNotifications(item.taskStatus)">
+    <i class="fa fa-envelope"></i> {{ item.count }} Task has been assigned to you
+  </li>
+</ul>
+</div>
+
+  <!-- <div *ngIf="showNotificationList" class="notification-dropdown">
     <div class="notification-dropdown-header">
       Notifications
     </div>
@@ -116,17 +140,17 @@
       <li *ngFor="let notification of notifications" class="list-group-item">
         <i class="fa fa-envelope"></i> {{ notification }}
       </li>
-      <li>One new task assign</li>
+      <li> One new task assign</li>
     </ul>
-  </div>
+  </div> -->
   </div>  
       </form>
     </div>
   </div>
 </nav>
 <div class="row">
-  <div class="col-md-2" *ngIf="authService.UserInfo.UserName">
-    <div class="sidebar bg-dark text-white vh-100" *ngIf="authService.UserInfo.RoleId=== '3F8FFDB7-3EFB-4FDF-9504-8452548F2EE7'">
+  <div class="col-md-2" *ngIf="authService.UserInfo.RoleId=== '3F8FFDB7-3EFB-4FDF-9504-8452548F2EE7'">
+    <div class="sidebar bg-dark text-white vh-100">
    <li style="list-style: none;">
     <h4 class="text-center"> <a class="nav-link text-white" routerLink="/dashboard"><i class="fa fa-bar-chart"></i> Dashboard</a></h4>
     <ul class="nav flex-column">
@@ -139,9 +163,7 @@
       
         <a class="nav-link text-white" routerLink="/category"><i class="fa fa-briefcase" ></i> Task Category</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/task-details"><i class="fa fa-tasks"></i> Tasks detail</a>
-      </li>
+  
       <li class="nav-item">
         <a class="nav-link text-white" routerLink="/taskassign"><i class="fa fa-tasks"></i> TaskAssign</a>
       </li>
@@ -160,7 +182,7 @@
    </li>
     </div>
   </div>
-  <div class=" col-md-10">
+  <div class=" col-md-{{colwidth}}">
  <router-outlet></router-outlet>
   </div>
 </div>

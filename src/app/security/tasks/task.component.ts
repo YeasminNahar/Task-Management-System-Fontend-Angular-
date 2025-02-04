@@ -39,7 +39,7 @@ export class TaskComponent {
     deadLine: string,
     taskCategoryID: number,
     isActive: boolean,
-    taskStatus: number,
+    TaskStatus: number,
     updateBy: any,
     createBy: any,
     createDate: any,
@@ -49,7 +49,7 @@ export class TaskComponent {
       description: "",
       deadLine: "",
       taskCategoryID: 0,
-      taskStatus : 0,
+      TaskStatus : 0,
       updateBy: '',
       createBy: '',
       createDate: '',
@@ -152,7 +152,7 @@ export class TaskComponent {
       deadLine: item.deadLine ? item.deadLine.split('T')[0] : '', // Ensure "yyyy-MM-dd" format
       taskCategoryID: item.taskCategoryId, // Use taskCategoryId from the response
       isActive: item.isActive,
-      taskStatus: item.taskStatus,
+      TaskStatus: item.taskStatus,
       updateBy: item.updateBy,
       createBy: item.createBy,
       createDate: item.createDate,
@@ -172,7 +172,7 @@ export class TaskComponent {
       description: "",
       deadLine: "",
       taskCategoryID: 0,
-      taskStatus: 0,
+      TaskStatus: 0,
       updateBy: '',
       createBy: '',
       createDate: '',
@@ -202,6 +202,7 @@ export class TaskComponent {
       createDate: new Date().toISOString(),
       updateDate: new Date().toISOString(),
       isActive: this.Task.isActive,
+      Taskstatus: this.Task.TaskStatus,
       taskCategoryID: taskCategoryID,
     };
 

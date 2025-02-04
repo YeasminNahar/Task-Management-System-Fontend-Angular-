@@ -57,13 +57,12 @@
   }
   /*Aikhanae Side bar ar design dau a hoicha*/
   .sidebar {
-    background: linear-gradient(to bottom, #100f11, #0c0c0c); /* Gradient background */
-    color: white;
-    height: 100vh; /* Full viewport height */
-    width: 200px; /* Adjust the width as needed */
-    border-radius: 0 20px 20px 0; /* Rounded corners on the right side */
+    background: linear-gradient(to bottom, #63d4ed, #ccccee); /* Gradient background */
+    color: rgb(41, 23, 23);
+    height: 100vh; 
+    
     padding: 20px;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    box-shadow: 2px 0 10px rgba(185, 183, 183, 0.1); /* Add a subtle shadow */
 }
 
 .sidebar ul {
@@ -74,20 +73,84 @@
 .sidebar li {
     margin: 10px 0;
 }
-
 .sidebar li a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
+  color: rgb(56, 51, 51);
+  text-decoration: none;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  border-radius: 10px;
+  transition: all 0.4s ease-in-out;
+  width: 90%; 
 }
 
+/* Hover Effect */
 .sidebar li a:hover {
-    background: #1abc9c; /* Highlight on hover */
-    color: white;
-    text-decoration: none;
+  background: linear-gradient(135deg, #1f89e7, #1565c0);
+  color: rgb(31, 24, 24);
+  transform: translateX(5px) scale(1.05); /* Moves and slightly scales */
+  box-shadow: 3px 3px 10px rgba(31, 137, 231, 0.3);
+  width: 100%; /* Slightly increases width */
+}
+.navbar {
+  background: linear-gradient(to right, #b0d7e6, #0c0c0c); /* Matching Sidebar Gradient */
+  padding: 10px 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar-brand:hover {
+  color: #4296e0; /* Smooth color transition on hover */
+}
+
+.navbar-nav .nav-link {
+  color: white;
+  font-size: 16px;
+  transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #141a1f; /* Same highlight color as sidebar */
+  transform: scale(1.1);
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+  background: #151414;
+  border: none;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-menu .dropdown-item {
+  color: white;
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background: #1f89e7;
+  color: white;
+}
+
+/* Buttons (Login, Logout, Signup) */
+.btn-outline-primary,
+.btn-outline-info,
+.btn-outline-success {
+  color: white;
+  border-color: #1f89e7;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-info:hover,
+.btn-outline-success:hover {
+  background: #1f89e7;
+  color: white;
+  box-shadow: 0px 0px 10px rgba(31, 137, 231, 0.5);
 }

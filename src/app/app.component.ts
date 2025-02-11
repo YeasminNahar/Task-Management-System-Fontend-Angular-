@@ -67,16 +67,17 @@ toggleNotificationList() {
     ngOnInit() {
       
       this.userRole = this.authService.UserInfo.RoleName;
-      if(this.userRole=='Admin'){
-        this.colwidth = this.colwidth;
-      }else{
-        this.colwidth = 12;
-      }
       this.updateCounts();
     }
     
       
     updateCounts() {
+      if(this.userRole=='Admin'){
+        this.colwidth = 10;
+      }else{
+        this.colwidth = 12;
+      }
+      
       const hd=new HttpHeaders({
         Token: this.authService.UserInfo.Token
       });

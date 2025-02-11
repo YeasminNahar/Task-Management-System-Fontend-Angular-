@@ -6,39 +6,48 @@ import { CommonService, toastPayload } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-member',
-  templateUrl: './member-registration.component.html',  // Update if necessary
-  styleUrls: ['./member-registration.component.css']   // Update if necessary
+  templateUrl: './member-registration.component.html',
+  styleUrls: ['./member-registration.component.css']
 })
 export class MemberComponent {
   isList: boolean = true;
   isNew: boolean = true;
   toast!: toastPayload;
+  listMembers: any = [];
 
-  constructor(private cs: CommonService,
-    private httpClient: HttpClient,
-    public authService: AuthService) {
+  Member: any = {
+    MemberId: 0,
+    MemberName: "",
+    Email: "",
+    Password: "",
+    isActive: true
+  };
+
+  constructor(private cs: CommonService, private httpClient: HttpClient, public authService: AuthService) {
     this.get();
   }
 
-  // Fetch all members
   get(): void {
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
-    this.httpClient.get(this.authService.baseURL + '/api/Member', { headers: oHttpHeaders }).subscribe((res) => {
-      if (res) {
+
+    const apiUrl = `${this.authService.baseURL}/api/Member/GetMember`; 
+    console.log("Fetching Members from:", apiUrl);
+
+    this.httpClient.get(apiUrl, { headers: oHttpHeaders }).subscribe(
+      (res: any) => {
         this.listMembers = res;
-      } else {
-        this.showMessage('warning', 'Session expired, please login.');
+      },
+      (error) => {
+        console.error("Error fetching members:", error);
+        this.showMessage('error', 'Failed to fetch members.');
       }
-    });
+    );
   }
 
-  // Submit form logic
   onSubmit(): void {
-    if (!this.validateForm()) {
-      return;
-    }
+    if (!this.validateForm()) return;
 
     if (this.isNew) {
       this.add();
@@ -47,70 +56,55 @@ export class MemberComponent {
     }
   }
 
-  // Validate the form
+  // 🔹 Validate form inputs
   validateForm(): boolean {
-    let isValid: boolean = true;
     if (!this.Member.MemberName || !this.Member.Email || !this.Member.Password) {
-      isValid = false;
       this.showMessage('warning', 'All fields are required.');
+      return false;
     }
-    return isValid;
+    return true;
   }
 
-  // Add a new member
   add(): void {
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
 
-    this.httpClient.post(this.authService.baseURL + '/api/Member/CreateMember', this.Member, { headers: oHttpHeaders }).subscribe((res) => {
-      this.isList = true;
-      this.get();
-      this.showMessage('success', 'Member added successfully.');
-    });
-  }
+    const apiUrl = `${this.authService.baseURL}/api/Member/CreateMember`;
+    console.log("Adding Member to:", apiUrl, this.Member);
 
-  // Update an existing member
+    this.httpClient.post(apiUrl, this.Member, { headers: oHttpHeaders }).subscribe(
+      (res) => {
+        this.isList = true;
+        this.get();
+        this.showMessage('success', 'Member added successfully.');
+      },
+      (error) => {
+        console.error("Error adding member:", error);
+        this.showMessage('error', 'Failed to add member.');
+      }
+    );
+  }
   update(): void {
     const oHttpHeaders = new HttpHeaders({
       'Token': this.authService.UserInfo.Token
     });
 
-    this.httpClient.put(this.authService.baseURL + '/api/Member/' + this.Member.MemberId, this.Member, { headers: oHttpHeaders }).subscribe((res) => {
-      this.isList = true;
-      this.get();
-      this.showMessage('success', 'Member updated successfully.');
-    });
+    const apiUrl = `${this.authService.baseURL}/api/Member/UpdateMember/${this.Member.MemberId}`;
+    console.log("Updating Member at:", apiUrl, this.Member);
+
+    this.httpClient.put(apiUrl, this.Member, { headers: oHttpHeaders }).subscribe(
+      (res) => {
+        this.isList = true;
+        this.get();
+        this.showMessage('success', 'Member updated successfully.');
+      },
+      (error) => {
+        console.error("Error updating member:", error);
+        this.showMessage('error', 'Failed to update member.');
+      }
+    );
   }
-
-  // Handle file input for picture
-  // onFileChange(event: any) {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     // You can implement file validation or upload logic here
-  //     this.Member.picture = file;
-  //   }
-  // }
-
-  listMembers: any = [];
-
-  // Member object with Password and Picture added
-  Member: {
-    MemberId: number,
-    MemberName: string,
-    Email: string,
-    Password: string,   // Added password property
-    // Added picture property (File type)
-    isActive: boolean
-  } = {
-    MemberId: 0,
-    MemberName: "",
-    Email: "",
-    Password: "",   // Initialize password property
-       // Initialize picture property
-    isActive: true
-  };
-
   showMessage(type: string, message: string) {
     this.toast = {
       message: message,

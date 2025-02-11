@@ -60,18 +60,18 @@
           <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-gear" aria-hidden="true"></i> Task Management
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li>
+          <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> -->
+            <!-- <li>
               <a class="dropdown-item" routerLink="/company"><i class="fa fa-briefcase" aria-hidden="true"></i> Company</a>
             </li>
             <li>
               <a class="dropdown-item" routerLink="/department"><i class="fa fa-briefcase" aria-hidden="true"></i> Department</a>
-            </li>
+            </li> -->
             <!-- <li>
               <a class="dropdown-item" routerLink="/category"><i class="fa fa-briefcase" aria-hidden="true"></i> Task Category</a>
             </li> -->
-            <li>
-           </ul>
+            <!-- <li>
+           </ul> -->
         </li>
         <!-- <li class="nav-item dropdown" *ngFor="let item of authService.UserInfo.ModuleMenus">
     <a *ngIf="item.ModuleName" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -171,10 +171,7 @@ type="button"
         <a class="nav-link text-white" routerLink="/file-attach">
           <i class="fa fa-file"></i> File Attached
         </a>
-     
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/reports"><i class="fa fa-cog"></i> Reports</a>
-      </li>
+
       <li class="nav-item">
         <a class="nav-link text-white" routerLink="/calendar-view"><i class="fa fa-cog"></i> CalenderView</a>
       </li>
@@ -182,8 +179,8 @@ type="button"
    </li>
     </div>
   </div>
-  <div class=" col-md-{{colwidth}}">
- <router-outlet></router-outlet>
+  <div class=" col-md-10">
+    <router-outlet></router-outlet>
   </div>
 </div>
 
